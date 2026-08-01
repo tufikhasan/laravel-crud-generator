@@ -25,7 +25,7 @@ php artisan make:crud Category --api
  ✓ Admin Controller
  ✓ API Resource
  ✓ API Controller
- ✓ Blade Views (index, create, edit)
+ ✓ Blade Views (index, create, edit, form)
  ✓ Routes appended
 
  INFO  CRUD for [Category] generated successfully!
@@ -122,6 +122,7 @@ php artisan make:crud {name} [--api] [--skip-model] [--force]
 | Index View | `resources/views/pages/admin/categories/index.blade.php` |
 | Create View | `resources/views/pages/admin/categories/create.blade.php` |
 | Edit View | `resources/views/pages/admin/categories/edit.blade.php` |
+| Form View | `resources/views/pages/admin/categories/form.blade.php` |
 | Show View | `resources/views/pages/admin/categories/show.blade.php` |
 | Routes | Appended to `routes/web.php` (and `routes/api.php` if `--api`) |
 
@@ -195,7 +196,7 @@ Generates: `app/Http/Resources/Category/CategoryResource.php`
 php artisan make:crud-views Category
 ```
 
-Generates: `resources/views/pages/admin/categories/{index,create,edit}.blade.php`
+Generates: `resources/views/pages/admin/categories/{index,create,edit,form}.blade.php`
 
 ---
 
@@ -288,6 +289,7 @@ stubs/crud/
     ├── index.blade.stub
     ├── create.blade.stub
     ├── edit.blade.stub
+    ├── form.blade.stub
     └── show.blade.stub
 ```
 
@@ -322,7 +324,7 @@ Every stub supports these replacement tokens:
 | `{{ model-names }}` | `categories` |
 | `{{ RootNamespace }}` | `App` |
 | `{{ RouteNamePrefix }}` | `admin` *(from config)* |
-| `{{ RouteWebPrefix }}` | `dashboard` *(from config)* |
+| `{{ RouteWebPrefix }}` | `admin` *(from config)* |
 
 ---
 

@@ -23,6 +23,7 @@ class MakeCrudViewsCommand extends BaseCrudCommand
             'create' => 'views/create.blade.stub',
             'edit' => 'views/edit.blade.stub',
             'show' => 'views/show.blade.stub',
+            'form' => 'views/form.blade.stub',
         ];
 
         $created = [];
