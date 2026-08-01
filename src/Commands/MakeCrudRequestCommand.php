@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace TufikHasan\CrudGenerator\Commands;
 
 class MakeCrudRequestCommand extends BaseCrudCommand
@@ -17,8 +15,8 @@ class MakeCrudRequestCommand extends BaseCrudCommand
 
     public function handle(): int
     {
-        $name  = (string) $this->argument('name');
-        $type  = strtolower((string) $this->argument('type'));
+        $name = (string) $this->argument('name');
+        $type = strtolower((string) $this->argument('type'));
         $force = (bool) $this->option('force');
 
         if (!in_array($type, self::VALID_TYPES, true)) {
@@ -26,12 +24,12 @@ class MakeCrudRequestCommand extends BaseCrudCommand
             return self::FAILURE;
         }
 
-        $renderer   = $this->makeRenderer($name);
-        $model      = $renderer->getModelName();
-        $className  = ucfirst($type) . $model . 'Request';
-        $content    = $renderer->renderStub("request.{$type}.stub");
+        $renderer = $this->makeRenderer($name);
+        $model = $renderer->getModelName();
+        $className = ucfirst($type) . $model . 'Request';
+        $content = $renderer->renderStub("request.{$type}.stub");
         $targetPath = $this->resolveAppPath('request', $model, "{$className}.php");
-        $written    = $renderer->write($targetPath, $content, $force);
+        $written = $renderer->write($targetPath, $content, $force);
 
         if ($written) {
             $this->components->info("Request [{$className}] created successfully.");

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 return [
 
     /*
@@ -27,13 +25,13 @@ return [
     |
     */
     'paths' => [
-        'dto'              => 'DTOs',
-        'action'           => 'Actions',
-        'service'          => 'Services',
-        'request'          => 'Http/Requests',
+        'dto' => 'DTOs',
+        'action' => 'Actions',
+        'service' => 'Services',
+        'request' => 'Http/Requests',
         'controller_admin' => 'Http/Controllers/Admin',
-        'controller_api'   => 'Http/Controllers/Api',
-        'resource'         => 'Http/Resources',
+        'controller_api' => 'Http/Controllers/Api',
+        'resource' => 'Http/Resources',
     ],
 
     /*
@@ -66,20 +64,9 @@ return [
     |
     */
     'routes' => [
-        'web_prefix'  => env('CRUD_ROUTE_WEB_PREFIX', 'dashboard'),
+        'web_prefix' => env('CRUD_ROUTE_WEB_PREFIX', 'dashboard'),
         'name_prefix' => env('CRUD_ROUTE_NAME_PREFIX', 'admin'),
-        'api_prefix'  => env('CRUD_ROUTE_API_PREFIX', ''),
+        'api_prefix' => env('CRUD_ROUTE_API_PREFIX', ''),
     ],
-
-    /*
-    |--------------------------------------------------------------------------
-    | Code Style
-    |--------------------------------------------------------------------------
-    |
-    | strict_types : Whether to add `declare(strict_types=1);` to generated
-    |                PHP files. Recommended for modern PHP projects.
-    |
-    */
-    'strict_types' => (bool) env('CRUD_STRICT_TYPES', true),
 
 ];

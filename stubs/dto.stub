@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace {{ RootNamespace }}\DTOs\{{ ModelName }};
 
 use {{ RootNamespace }}\Http\Requests\{{ ModelName }}\Store{{ ModelName }}Request;

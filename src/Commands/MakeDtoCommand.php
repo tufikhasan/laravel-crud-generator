@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace TufikHasan\CrudGenerator\Commands;
 
 class MakeDtoCommand extends BaseCrudCommand
@@ -14,12 +12,12 @@ class MakeDtoCommand extends BaseCrudCommand
 
     public function handle(): int
     {
-        $name  = (string) $this->argument('name');
+        $name = (string) $this->argument('name');
         $force = (bool) $this->option('force');
 
-        $renderer   = $this->makeRenderer($name);
-        $model      = $renderer->getModelName();
-        $content    = $renderer->renderStub('dto.stub');
+        $renderer = $this->makeRenderer($name);
+        $model = $renderer->getModelName();
+        $content = $renderer->renderStub('dto.stub');
         $targetPath = $this->resolveAppPath('dto', $model, "{$model}Data.php");
 
         $written = $renderer->write($targetPath, $content, $force);

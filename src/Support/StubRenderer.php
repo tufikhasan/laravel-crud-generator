@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace TufikHasan\CrudGenerator\Support;
 
 use Illuminate\Support\Str;
@@ -25,8 +23,8 @@ class StubRenderer
         string $packageStubsPath = '',
         array $extraTokens = [],
     ) {
-        $this->modelName        = Str::studly($modelName);
-        $this->rootNamespace    = rtrim($rootNamespace, '\\');
+        $this->modelName = Str::studly($modelName);
+        $this->rootNamespace = rtrim($rootNamespace, '\\');
         $this->packageStubsPath = rtrim($packageStubsPath, '/');
         $this->buildTokens($extraTokens);
     }
@@ -42,21 +40,21 @@ class StubRenderer
 
         $this->tokens = array_merge([
             // ── Model name variants ─────────────────────────────────────────
-            '{{ ModelName }}'     => $name,
-            '{{ modelName }}'     => Str::camel($name),
-            '{{ model_name }}'    => Str::snake($name),
-            '{{ model-name }}'    => Str::kebab($name),
-            '{{ ModelNames }}'    => (string) Str::pluralStudly($name),
-            '{{ modelNames }}'    => Str::camel(Str::plural($name)),
-            '{{ model_names }}'   => Str::snake(Str::plural($name)),
-            '{{ model-names }}'   => Str::kebab(Str::plural($name)),
+            '{{ ModelName }}' => $name,
+            '{{ modelName }}' => Str::camel($name),
+            '{{ model_name }}' => Str::snake($name),
+            '{{ model-name }}' => Str::kebab($name),
+            '{{ ModelNames }}' => (string) Str::pluralStudly($name),
+            '{{ modelNames }}' => Str::camel(Str::plural($name)),
+            '{{ model_names }}' => Str::snake(Str::plural($name)),
+            '{{ model-names }}' => Str::kebab(Str::plural($name)),
 
             // ── Namespace ───────────────────────────────────────────────────
             '{{ RootNamespace }}' => $this->rootNamespace,
 
             // ── Route defaults (overridden by extraTokens if provided) ───────
             '{{ RouteNamePrefix }}' => 'admin',
-            '{{ RouteWebPrefix }}'  => 'dashboard',
+            '{{ RouteWebPrefix }}' => 'dashboard',
         ], $extra);
     }
 

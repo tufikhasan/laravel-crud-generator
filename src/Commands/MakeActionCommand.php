@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace TufikHasan\CrudGenerator\Commands;
 
 class MakeActionCommand extends BaseCrudCommand
@@ -17,8 +15,8 @@ class MakeActionCommand extends BaseCrudCommand
 
     public function handle(): int
     {
-        $name  = (string) $this->argument('name');
-        $type  = strtolower((string) $this->argument('type'));
+        $name = (string) $this->argument('name');
+        $type = strtolower((string) $this->argument('type'));
         $force = (bool) $this->option('force');
 
         if (!in_array($type, self::VALID_TYPES, true)) {
@@ -26,12 +24,12 @@ class MakeActionCommand extends BaseCrudCommand
             return self::FAILURE;
         }
 
-        $renderer   = $this->makeRenderer($name);
-        $model      = $renderer->getModelName();
-        $className  = ucfirst($type) . $model . 'Action';
-        $content    = $renderer->renderStub("action.{$type}.stub");
+        $renderer = $this->makeRenderer($name);
+        $model = $renderer->getModelName();
+        $className = ucfirst($type) . $model . 'Action';
+        $content = $renderer->renderStub("action.{$type}.stub");
         $targetPath = $this->resolveAppPath('action', $model, "{$className}.php");
-        $written    = $renderer->write($targetPath, $content, $force);
+        $written = $renderer->write($targetPath, $content, $force);
 
         if ($written) {
             $this->components->info("Action [{$className}] created successfully.");

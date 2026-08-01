@@ -74,13 +74,12 @@ Add to your project's `composer.json`:
 {
     "repositories": [
         {
-            "type": "path",
-            "url": "./packages/tufikhasan/laravel-crud-generator",
-            "options": { "symlink": true }
+            "type": "vcs",
+            "url": "https://github.com/tufikhasan/laravel-crud-generator.git",
         }
     ],
     "require": {
-        "tufikhasan/laravel-crud-generator": "@dev"
+        "tufikhasan/laravel-crud-generator": "dev-main"
     }
 }
 ```
@@ -260,9 +259,6 @@ return [
         'api_prefix'  => env('CRUD_ROUTE_API_PREFIX', ''),
     ],
 
-    // Add declare(strict_types=1) to all generated files
-    'strict_types' => (bool) env('CRUD_STRICT_TYPES', true),
-
 ];
 ```
 
@@ -282,7 +278,6 @@ return [
 | `routes.web_prefix` | `dashboard` | URL prefix for admin routes |
 | `routes.name_prefix` | `admin` | Named route prefix |
 | `routes.api_prefix` | `''` | URL prefix for API routes |
-| `strict_types` | `true` | Add `declare(strict_types=1)` |
 
 ---
 

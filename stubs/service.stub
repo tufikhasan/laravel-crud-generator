@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace {{ RootNamespace }}\Services\{{ ModelName }};
 
 use {{ RootNamespace }}\DTOs\{{ ModelName }}\{{ ModelName }}Data;

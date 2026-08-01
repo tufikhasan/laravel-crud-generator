@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace TufikHasan\CrudGenerator\Commands;
 
 class MakeCrudViewsCommand extends BaseCrudCommand
@@ -14,25 +12,25 @@ class MakeCrudViewsCommand extends BaseCrudCommand
 
     public function handle(): int
     {
-        $name  = (string) $this->argument('name');
+        $name = (string) $this->argument('name');
         $force = (bool) $this->option('force');
 
-        $renderer   = $this->makeRenderer($name);
+        $renderer = $this->makeRenderer($name);
         $modelNames = $renderer->get('{{ model_names }}'); // e.g. "categories"
 
         $views = [
-            'index'  => 'views/index.blade.stub',
+            'index' => 'views/index.blade.stub',
             'create' => 'views/create.blade.stub',
-            'edit'   => 'views/edit.blade.stub',
+            'edit' => 'views/edit.blade.stub',
         ];
 
         $created = [];
         $skipped = [];
 
         foreach ($views as $viewName => $stubFile) {
-            $content    = $renderer->renderStub($stubFile);
+            $content = $renderer->renderStub($stubFile);
             $targetPath = $this->resolveViewPath($modelNames, "{$viewName}.blade.php");
-            $written    = $renderer->write($targetPath, $content, $force);
+            $written = $renderer->write($targetPath, $content, $force);
 
             $written ? $created[] = $viewName : $skipped[] = $viewName;
         }

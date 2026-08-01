@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace TufikHasan\CrudGenerator\Commands;
 
 use TufikHasan\CrudGenerator\Support\StubRenderer;
@@ -18,13 +16,13 @@ class MakeCrudCommand extends BaseCrudCommand
 
     public function handle(): int
     {
-        $name      = (string) $this->argument('name');
-        $withApi   = (bool) $this->option('api');
+        $name = (string) $this->argument('name');
+        $withApi = (bool) $this->option('api');
         $skipModel = (bool) $this->option('skip-model');
-        $force     = (bool) $this->option('force');
+        $force = (bool) $this->option('force');
 
         $renderer = $this->makeRenderer($name);
-        $model    = $renderer->getModelName();
+        $model = $renderer->getModelName();
 
         $this->newLine();
         $this->components->info("Generating enterprise CRUD for [{$model}]...");
@@ -36,7 +34,7 @@ class MakeCrudCommand extends BaseCrudCommand
         $this->runSub('make:dto', $opts, '✓ DTO');
 
         // 2. Actions
-        $this->runSub('make:action', $opts + ['type' => 'store'],  '✓ Store Action');
+        $this->runSub('make:action', $opts + ['type' => 'store'], '✓ Store Action');
         $this->runSub('make:action', $opts + ['type' => 'update'], '✓ Update Action');
         $this->runSub('make:action', $opts + ['type' => 'delete'], '✓ Delete Action');
 
@@ -44,7 +42,7 @@ class MakeCrudCommand extends BaseCrudCommand
         $this->runSub('make:crud-service', $opts, '✓ Service');
 
         // 4. Form Requests
-        $this->runSub('make:crud-request', $opts + ['type' => 'store'],  '✓ Store Request');
+        $this->runSub('make:crud-request', $opts + ['type' => 'store'], '✓ Store Request');
         $this->runSub('make:crud-request', $opts + ['type' => 'update'], '✓ Update Request');
 
         // 5. Admin Controller
@@ -52,7 +50,7 @@ class MakeCrudCommand extends BaseCrudCommand
 
         // 6. API (optional)
         if ($withApi) {
-            $this->runSub('make:crud-resource',   $opts,                       '✓ API Resource');
+            $this->runSub('make:crud-resource', $opts, '✓ API Resource');
             $this->runSub('make:crud-controller', $opts + ['target' => 'api'], '✓ API Controller');
         }
 
@@ -73,9 +71,9 @@ class MakeCrudCommand extends BaseCrudCommand
         $this->newLine();
         $this->components->info("CRUD for [{$model}] generated successfully!");
 
-        $webPrefix  = (string) $this->crudConfig('routes.web_prefix', 'dashboard');
+        $webPrefix = (string) $this->crudConfig('routes.web_prefix', 'dashboard');
         $namePrefix = (string) $this->crudConfig('routes.name_prefix', 'admin');
-        $kebab      = $renderer->get('{{ model-names }}');
+        $kebab = $renderer->get('{{ model-names }}');
 
         if ($withApi) {
             $this->line("  <fg=cyan>API routes:</>  /api/{$kebab}");
@@ -107,7 +105,7 @@ class MakeCrudCommand extends BaseCrudCommand
         if (file_exists($modelPath) && !$force) {
             // Model exists — create only the migration
             $this->call('make:migration', [
-                'name'     => 'create_' . strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $model)) . 's_table',
+                'name' => 'create_' . strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $model)) . 's_table',
                 '--create' => strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $model)) . 's',
             ]);
             $this->components->twoColumnDetail('<fg=green>✓ Migration</>', '(model already existed, only migration created)');
@@ -124,19 +122,19 @@ class MakeCrudCommand extends BaseCrudCommand
 
     protected function appendRoutes(StubRenderer $renderer, bool $withApi): void
     {
-        $model      = $renderer->getModelName();
+        $model = $renderer->getModelName();
         $modelNames = $renderer->get('{{ model-names }}');   // kebab plural, e.g. "product-variants"
         $modelSnake = $renderer->get('{{ model_names }}');   // snake plural, e.g. "product_variants"
-        $namespace  = $renderer->getRootNamespace();
+        $namespace = $renderer->getRootNamespace();
 
         // ── Config values ──────────────────────────────────────────────────
-        $webPrefix  = (string) $this->crudConfig('routes.web_prefix', 'dashboard');
+        $webPrefix = (string) $this->crudConfig('routes.web_prefix', 'dashboard');
         $namePrefix = (string) $this->crudConfig('routes.name_prefix', 'admin');
-        $apiPrefix  = (string) $this->crudConfig('routes.api_prefix', '');
+        $apiPrefix = (string) $this->crudConfig('routes.api_prefix', '');
 
         // ── Web (admin) route ──────────────────────────────────────────────
         $adminController = "\\{$namespace}\\Http\\Controllers\\Admin\\{$model}Controller";
-        $routeUri        = $webPrefix ? "{$webPrefix}/{$modelNames}" : $modelNames;
+        $routeUri = $webPrefix ? "{$webPrefix}/{$modelNames}" : $modelNames;
 
         $webRoute = "\n// {$model} CRUD\n"
             . "Route::resource('{$routeUri}', {$adminController}::class)\n"
@@ -150,7 +148,7 @@ class MakeCrudCommand extends BaseCrudCommand
         // ── API route ──────────────────────────────────────────────────────
         if ($withApi) {
             $apiController = "\\{$namespace}\\Http\\Controllers\\Api\\{$model}Controller";
-            $apiUri        = $apiPrefix ? "{$apiPrefix}/{$modelNames}" : $modelNames;
+            $apiUri = $apiPrefix ? "{$apiPrefix}/{$modelNames}" : $modelNames;
 
             $apiRoute = "\n// {$model} API\n"
                 . "Route::apiResource('{$apiUri}', {$apiController}::class);\n";

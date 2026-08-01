@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace TufikHasan\CrudGenerator\Commands;
 
 class MakeCrudServiceCommand extends BaseCrudCommand
@@ -14,15 +12,15 @@ class MakeCrudServiceCommand extends BaseCrudCommand
 
     public function handle(): int
     {
-        $name  = (string) $this->argument('name');
+        $name = (string) $this->argument('name');
         $force = (bool) $this->option('force');
 
-        $renderer   = $this->makeRenderer($name);
-        $model      = $renderer->getModelName();
-        $className  = "{$model}Service";
-        $content    = $renderer->renderStub('service.stub');
+        $renderer = $this->makeRenderer($name);
+        $model = $renderer->getModelName();
+        $className = "{$model}Service";
+        $content = $renderer->renderStub('service.stub');
         $targetPath = $this->resolveAppPath('service', $model, "{$className}.php");
-        $written    = $renderer->write($targetPath, $content, $force);
+        $written = $renderer->write($targetPath, $content, $force);
 
         if ($written) {
             $this->components->info("Service [{$className}] created successfully.");

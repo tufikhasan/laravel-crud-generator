@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace TufikHasan\CrudGenerator;
 
 use Illuminate\Support\ServiceProvider;

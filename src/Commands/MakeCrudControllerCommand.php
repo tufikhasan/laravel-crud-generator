@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace TufikHasan\CrudGenerator\Commands;
 
 class MakeCrudControllerCommand extends BaseCrudCommand
@@ -17,22 +15,22 @@ class MakeCrudControllerCommand extends BaseCrudCommand
 
     public function handle(): int
     {
-        $name   = (string) $this->argument('name');
+        $name = (string) $this->argument('name');
         $target = strtolower((string) $this->argument('target'));
-        $force  = (bool) $this->option('force');
+        $force = (bool) $this->option('force');
 
         if (!in_array($target, self::VALID_TARGETS, true)) {
             $this->components->error("Invalid target [{$target}]. Valid targets: " . implode(', ', self::VALID_TARGETS));
             return self::FAILURE;
         }
 
-        $renderer   = $this->makeRenderer($name);
-        $model      = $renderer->getModelName();
-        $className  = "{$model}Controller";
-        $configKey  = "controller_{$target}";
-        $content    = $renderer->renderStub("controller.{$target}.stub");
+        $renderer = $this->makeRenderer($name);
+        $model = $renderer->getModelName();
+        $className = "{$model}Controller";
+        $configKey = "controller_{$target}";
+        $content = $renderer->renderStub("controller.{$target}.stub");
         $targetPath = $this->resolveAppPath($configKey, "{$className}.php");
-        $written    = $renderer->write($targetPath, $content, $force);
+        $written = $renderer->write($targetPath, $content, $force);
 
         $label = ucfirst($target) . " Controller [{$className}]";
 
