@@ -9,6 +9,7 @@ class MakeCrudCommand extends BaseCrudCommand
     protected $signature = 'make:crud
         {name : The model name in StudlyCase (e.g. Category, ProductVariant)}
         {--api : Also generate API controller, API resource, and API routes}
+        {--S|simple : Generate simple CRUD (Request -> Controller -> Service)}
         {--skip-model : Skip generating the Eloquent model and migration (useful if the model already exists)}
         {--force : Overwrite existing files}';
 
@@ -18,6 +19,7 @@ class MakeCrudCommand extends BaseCrudCommand
     {
         $name = (string) $this->argument('name');
         $withApi = (bool) $this->option('api');
+        $isSimple = (bool) $this->option('simple');
         $skipModel = (bool) $this->option('skip-model');
         $force = (bool) $this->option('force');
 
@@ -29,29 +31,35 @@ class MakeCrudCommand extends BaseCrudCommand
         $this->newLine();
 
         $opts = ['name' => $name, '--force' => $force];
+        $simpleOpts = $isSimple ? ['--simple' => true] : [];
 
-        // 1. DTO
-        $this->runSub('make:dto', $opts, '✓ DTO');
+        if (!$isSimple) {
+            // 1. DTO
+            $this->runSub('make:dto', $opts, '✓ DTO');
 
-        // 2. Actions
-        $this->runSub('make:action', $opts + ['type' => 'store'], '✓ Store Action');
-        $this->runSub('make:action', $opts + ['type' => 'update'], '✓ Update Action');
-        $this->runSub('make:action', $opts + ['type' => 'delete'], '✓ Delete Action');
+            // 2. Actions
+            $this->runSub('make:action', $opts + ['type' => 'store'], '✓ Store Action');
+            $this->runSub('make:action', $opts + ['type' => 'update'], '✓ Update Action');
+            $this->runSub('make:action', $opts + ['type' => 'delete'], '✓ Delete Action');
+        } else {
+            $this->components->twoColumnDetail('<fg=yellow>~ DTO</>', '(--simple)');
+            $this->components->twoColumnDetail('<fg=yellow>~ Actions</>', '(--simple)');
+        }
 
         // 3. Service
-        $this->runSub('make:crud-service', $opts, '✓ Service');
+        $this->runSub('make:crud-service', $opts + $simpleOpts, '✓ Service');
 
         // 4. Form Requests
         $this->runSub('make:crud-request', $opts + ['type' => 'store'], '✓ Store Request');
         $this->runSub('make:crud-request', $opts + ['type' => 'update'], '✓ Update Request');
 
         // 5. Admin Controller
-        $this->runSub('make:crud-controller', $opts + ['target' => 'admin'], '✓ Admin Controller');
+        $this->runSub('make:crud-controller', $opts + ['target' => 'admin'] + $simpleOpts, '✓ Admin Controller');
 
         // 6. API (optional)
         if ($withApi) {
             $this->runSub('make:crud-resource', $opts, '✓ API Resource');
-            $this->runSub('make:crud-controller', $opts + ['target' => 'api'], '✓ API Controller');
+            $this->runSub('make:crud-controller', $opts + ['target' => 'api'] + $simpleOpts, '✓ API Controller');
         }
 
         // 7. Blade Views
@@ -81,13 +89,33 @@ class MakeCrudCommand extends BaseCrudCommand
         $this->line("  <fg=cyan>Admin routes:</> /{$webPrefix}/{$kebab}");
         $this->line("  <fg=cyan>Route names:</>  {$namePrefix}.{$renderer->get('{{ model_names }}')}.{index|create|store|edit|update|destroy}");
         $this->newLine();
+        $this->line('  <fg=yellow>Next steps:</>');
+        $step = 1;
+
         if (!$skipModel) {
-            $this->line('  <fg=yellow>Next steps:</>');
-            $this->line("  1. Update your migration in <fg=cyan>database/migrations/</>");
-            $this->line("  2. Fill in the <fg=cyan>\$fillable</> array on the {$model} model");
-            $this->line("  3. Add fields to the DTO and Service");
-            $this->newLine();
+            $this->line("  {$step}. Update your migration in <fg=cyan>database/migrations/</>");
+            $step++;
+            $this->line("  {$step}. Fill in the <fg=cyan>\$fillable</> array on the {$model} model");
+            $step++;
         }
+
+        if (!$isSimple) {
+            $this->line("  {$step}. Add fields to the DTO and Service");
+            $step++;
+        } else {
+            $this->line("  {$step}. Add fields to the Service");
+            $step++;
+        }
+
+        $requestPath = "app/" . $this->crudConfig('paths.request', 'Http/Requests') . "/{$model}";
+        $this->line("  {$step}. Update validation rules in <fg=cyan>{$requestPath}</>");
+        $step++;
+
+        if ($withApi) {
+            $resourcePath = "app/" . $this->crudConfig('paths.resource', 'Http/Resources') . "/{$model}/{$model}Resource.php";
+            $this->line("  {$step}. Map fields in the toArray() method of <fg=cyan>{$resourcePath}</>");
+        }
+        $this->newLine();
 
         return self::SUCCESS;
     }

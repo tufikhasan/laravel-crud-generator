@@ -7,6 +7,7 @@ class MakeCrudControllerCommand extends BaseCrudCommand
     protected $signature = 'make:crud-controller
         {name : The model name (e.g. Category)}
         {target : Target type: admin or api}
+        {--S|simple : Generate simple controller (bypasses Action and DTO)}
         {--force : Overwrite existing file}';
 
     protected $description = 'Generate a Controller class (admin|api)';
@@ -17,6 +18,7 @@ class MakeCrudControllerCommand extends BaseCrudCommand
     {
         $name = (string) $this->argument('name');
         $target = strtolower((string) $this->argument('target'));
+        $isSimple = (bool) $this->option('simple');
         $force = (bool) $this->option('force');
 
         if (!in_array($target, self::VALID_TARGETS, true)) {
@@ -28,7 +30,9 @@ class MakeCrudControllerCommand extends BaseCrudCommand
         $model = $renderer->getModelName();
         $className = "{$model}Controller";
         $configKey = "controller_{$target}";
-        $content = $renderer->renderStub("controller.{$target}.stub");
+        
+        $stubName = $isSimple ? "controller.{$target}.simple.stub" : "controller.{$target}.stub";
+        $content = $renderer->renderStub($stubName);
         $targetPath = $this->resolveAppPath($configKey, "{$className}.php");
         $written = $renderer->write($targetPath, $content, $force);
 

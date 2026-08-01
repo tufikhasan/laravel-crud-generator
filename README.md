@@ -28,7 +28,18 @@ php artisan make:crud Category --api
  ✓ Blade Views (index, create, edit, form)
  ✓ Routes appended
 
- INFO  CRUD for [Category] generated successfully!
+  INFO  CRUD for [Category] generated successfully!
+
+  API routes:  /api/categories
+  Admin routes: /admin/categories
+  Route names:  admin.categories.{index|create|store|edit|update|destroy}
+
+  Next steps:
+  1. Update your migration in database/migrations/
+  2. Fill in the $fillable array on the Category model
+  3. Add fields to the DTO and Service 
+  4. Update validation rules in app/Http/Requests/Category
+  5. Map fields in the toArray() method of app/Http/Resources/Category/CategoryResource.php
 ```
 
 ---
@@ -40,6 +51,7 @@ php artisan make:crud Category --api
 - ✅ **Publishable stubs** — override any generated file template
 - ✅ **Model + migration by default** — pass `--skip-model` if already exists
 - ✅ Optional `--api` flag — API controller + Resource + routes
+- ✅ Optional `--simple` (`-s`) flag — Bypass DTOs & Actions for simple CRUD
 - ✅ `--force` flag to overwrite existing files
 - ✅ **Individual commands** — generate only what you need
 - ✅ Auto-registers via **Laravel package auto-discovery**
@@ -82,6 +94,9 @@ php artisan make:crud Product --api
 # Skip model/migration if the model already exists
 php artisan make:crud Product --skip-model
 
+# Generate simple CRUD (Request -> Controller -> Service -> Model)
+php artisan make:crud Category --simple
+
 # Overwrite existing files
 php artisan make:crud Product --force
 ```
@@ -100,6 +115,7 @@ php artisan make:crud {name} [--api] [--skip-model] [--force]
 |-----------------|-------------|
 | `name`          | Model name in StudlyCase (`Category`, `ProductVariant`) |
 | `--api`         | Also generate API controller, API resource, and API routes |
+| `--S, --simple` | Generate simple CRUD (Request -> Controller -> Service) |
 | `--skip-model`  | Skip model + migration (use when the model already exists) |
 | `--force`       | Overwrite existing files |
 
@@ -330,9 +346,13 @@ Every stub supports these replacement tokens:
 
 ## Architecture Overview
 
-This package generates code following a strict enterprise architecture:
+This package supports two enterprise-grade architectural patterns. A hybrid approach is recommended for most applications.
 
-```
+### 1. Hybrid Architecture (Default)
+
+The best choice for complex entities (e.g., enterprise multi-vendor eCommerce, SaaS subscriptions, POS, inventory, accounting).
+
+```text
 HTTP Request
      │
      ▼
@@ -346,6 +366,26 @@ DTO  (readonly value object — carries validated data)
      │
      ▼
 Action  (one use-case — wraps service in DB::transaction)
+     │
+     ▼
+Service  (reusable business logic — create / update / delete)
+     │
+     ▼
+Model  (Eloquent)
+```
+
+### 2. Simple Architecture (`--simple` or `-s`)
+
+Excellent for basic entities like `Category`, `Brand`, `Unit`, `Country`, `City`, or `Color`. It skips the DTO and Action layers entirely.
+
+```text
+HTTP Request
+     │
+     ▼
+Controller  (HTTP only — validate, authorize, pass data to Service)
+     │
+     ▼
+Form Request (validation + authorization)
      │
      ▼
 Service  (reusable business logic — create / update / delete)

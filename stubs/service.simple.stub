@@ -1,0 +1,34 @@
+<?php
+
+namespace {{ RootNamespace }}\Services\{{ ModelName }};
+
+use {{ RootNamespace }}\Models\{{ ModelName }};
+use Illuminate\Support\Str;
+
+class {{ ModelName }}Service
+{
+    public function create(array $data): {{ ModelName }}
+    {
+        return {{ ModelName }}::create([
+            'name' => $data['name'] ?? null,
+            'slug' => isset($data['name']) ? Str::slug($data['name']) : null,
+            // TODO: Map additional fields
+        ]);
+    }
+
+    public function update({{ ModelName }} ${{ modelName }}, array $data): {{ ModelName }}
+    {
+        ${{ modelName }}->update([
+            'name' => $data['name'] ?? ${{ modelName }}->name,
+            'slug' => isset($data['name']) ? Str::slug($data['name']) : ${{ modelName }}->slug,
+            // TODO: Map additional fields
+        ]);
+
+        return ${{ modelName }}->refresh();
+    }
+
+    public function delete({{ ModelName }} ${{ modelName }}): void
+    {
+        ${{ modelName }}->delete();
+    }
+}

@@ -1,6 +1,6 @@
 {
     "name": "tufikhasan/laravel-crud-generator",
-    "description": "Enterprise-grade CRUD generator for Laravel following the DTO → Action → Service → Controller pattern.",
+    "description": "Enterprise-grade CRUD generator for Laravel supporting both hybrid (DTO/Action) and simple architecture patterns.",
     "type": "library",
     "license": "MIT",
     "keywords": [
