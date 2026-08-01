@@ -286,7 +286,8 @@ stubs/crud/
 └── views/
     ├── index.blade.stub
     ├── create.blade.stub
-    └── edit.blade.stub
+    ├── edit.blade.stub
+    └── show.blade.stub
 ```
 
 ### 2. Edit a Stub
