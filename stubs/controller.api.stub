@@ -12,44 +12,67 @@ use {{ RootNamespace }}\Http\Requests\{{ ModelName }}\Update{{ ModelName }}Reque
 use {{ RootNamespace }}\Http\Resources\{{ ModelName }}\{{ ModelName }}Resource;
 use {{ RootNamespace }}\Models\{{ ModelName }};
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class {{ ModelName }}Controller extends Controller
 {
-    public function index(): AnonymousResourceCollection
+    public function index(): JsonResponse
     {
         ${{ modelNames }} = {{ ModelName }}::latest()->paginate(15);
 
-        return {{ ModelName }}Resource::collection(${{ modelNames }});
+        return {{ ModelName }}Resource::collection(${{ modelNames }})
+            ->additional([
+                'success' => true,
+                'message' => '{{ ModelName }} list retrieved successfully.',
+            ])
+            ->response()
+            ->setStatusCode(200);
     }
 
     public function store(
         Store{{ ModelName }}Request $request,
         Store{{ ModelName }}Action $action,
-    ): {{ ModelName }}Resource {
+    ): JsonResponse {
         ${{ modelName }} = $action->execute(
             {{ ModelName }}Data::fromRequest($request)
         );
 
-        return new {{ ModelName }}Resource(${{ modelName }});
+        return (new {{ ModelName }}Resource(${{ modelName }}))
+            ->additional([
+                'success' => true,
+                'message' => '{{ ModelName }} created successfully.',
+            ])
+            ->response()
+            ->setStatusCode(201);
     }
 
-    public function show({{ ModelName }} ${{ modelName }}): {{ ModelName }}Resource
+    public function show({{ ModelName }} ${{ modelName }}): JsonResponse
     {
-        return new {{ ModelName }}Resource(${{ modelName }});
+        return (new {{ ModelName }}Resource(${{ modelName }}))
+            ->additional([
+                'success' => true,
+                'message' => '{{ ModelName }} retrieved successfully.',
+            ])
+            ->response()
+            ->setStatusCode(200);
     }
 
     public function update(
         Update{{ ModelName }}Request $request,
         {{ ModelName }} ${{ modelName }},
         Update{{ ModelName }}Action $action,
-    ): {{ ModelName }}Resource {
+    ): JsonResponse {
         ${{ modelName }} = $action->execute(
             ${{ modelName }},
             {{ ModelName }}Data::fromRequest($request)
         );
 
-        return new {{ ModelName }}Resource(${{ modelName }});
+        return (new {{ ModelName }}Resource(${{ modelName }}))
+            ->additional([
+                'success' => true,
+                'message' => '{{ ModelName }} updated successfully.',
+            ])
+            ->response()
+            ->setStatusCode(200);
     }
 
     public function destroy(
@@ -58,6 +81,9 @@ class {{ ModelName }}Controller extends Controller
     ): JsonResponse {
         $action->execute(${{ modelName }});
 
-        return response()->json(['message' => '{{ ModelName }} deleted successfully.']);
+        return response()->json([
+            'success' => true,
+            'message' => '{{ ModelName }} deleted successfully.',
+        ]);
     }
 }

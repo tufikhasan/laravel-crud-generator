@@ -8,7 +8,7 @@ class MakeCrudViewsCommand extends BaseCrudCommand
         {name : The model name (e.g. Category)}
         {--force : Overwrite existing files}';
 
-    protected $description = 'Generate Blade view files (index, create, edit) for the admin panel';
+    protected $description = 'Generate Blade view files (index, create, edit, show) for the admin panel';
 
     public function handle(): int
     {
@@ -22,6 +22,7 @@ class MakeCrudViewsCommand extends BaseCrudCommand
             'index' => 'views/index.blade.stub',
             'create' => 'views/create.blade.stub',
             'edit' => 'views/edit.blade.stub',
+            'show' => 'views/show.blade.stub',
         ];
 
         $created = [];
