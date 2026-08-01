@@ -1,0 +1,36 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ RootNamespace }}\DTOs\{{ ModelName }};
+
+use {{ RootNamespace }}\Http\Requests\{{ ModelName }}\Store{{ ModelName }}Request;
+use {{ RootNamespace }}\Http\Requests\{{ ModelName }}\Update{{ ModelName }}Request;
+
+class {{ ModelName }}Data
+{
+    /**
+     * Create a new {{ ModelName }}Data instance.
+     */
+    public function __construct(
+        public readonly string $name,
+        // TODO: Add more readonly properties here
+    ) {
+    }
+
+    public static function fromRequest(Store{{ ModelName }}Request|Update{{ ModelName }}Request $request): self
+    {
+        return new self(
+            name: $request->string('name')->toString(),
+            // TODO: Map additional request fields here
+        );
+    }
+
+    /** @param array<string, mixed> $data */
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            name: (string) ($data['name'] ?? ''),
+        );
+    }
+}

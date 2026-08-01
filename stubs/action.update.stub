@@ -1,0 +1,27 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ RootNamespace }}\Actions\{{ ModelName }};
+
+use {{ RootNamespace }}\DTOs\{{ ModelName }}\{{ ModelName }}Data;
+use {{ RootNamespace }}\Models\{{ ModelName }};
+use {{ RootNamespace }}\Services\{{ ModelName }}\{{ ModelName }}Service;
+use Illuminate\Support\Facades\DB;
+
+class Update{{ ModelName }}Action
+{
+    public function __construct(
+        private readonly {{ ModelName }}Service $service,
+    ) {
+    }
+
+    public function execute(
+        {{ ModelName }} ${{ modelName }},
+        {{ ModelName }}Data $data,
+    ): {{ ModelName }} {
+        return DB::transaction(
+            fn () => $this->service->update(${{ modelName }}, $data)
+        );
+    }
+}

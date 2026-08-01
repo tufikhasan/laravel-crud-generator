@@ -1,0 +1,53 @@
+{
+    "name": "tufikhasan/laravel-crud-generator",
+    "description": "Enterprise-grade CRUD generator for Laravel following the DTO → Action → Service → Controller pattern.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "laravel",
+        "crud",
+        "generator",
+        "artisan",
+        "dto",
+        "action",
+        "service",
+        "scaffolding"
+    ],
+    "authors": [
+        {
+            "name": "Towfik Hasan",
+            "email": "tufikhasan05@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "illuminate/console": "^11.0|^12.0|^13.0",
+        "illuminate/support": "^11.0|^12.0|^13.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^9.0|^10.0",
+        "phpunit/phpunit": "^10.0|^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "TufikHasan\\CrudGenerator\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "TufikHasan\\CrudGenerator\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "TufikHasan\\CrudGenerator\\CrudGeneratorServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

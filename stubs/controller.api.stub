@@ -1,0 +1,65 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ RootNamespace }}\Http\Controllers\Api;
+
+use {{ RootNamespace }}\Actions\{{ ModelName }}\Delete{{ ModelName }}Action;
+use {{ RootNamespace }}\Actions\{{ ModelName }}\Store{{ ModelName }}Action;
+use {{ RootNamespace }}\Actions\{{ ModelName }}\Update{{ ModelName }}Action;
+use {{ RootNamespace }}\DTOs\{{ ModelName }}\{{ ModelName }}Data;
+use {{ RootNamespace }}\Http\Controllers\Controller;
+use {{ RootNamespace }}\Http\Requests\{{ ModelName }}\Store{{ ModelName }}Request;
+use {{ RootNamespace }}\Http\Requests\{{ ModelName }}\Update{{ ModelName }}Request;
+use {{ RootNamespace }}\Http\Resources\{{ ModelName }}\{{ ModelName }}Resource;
+use {{ RootNamespace }}\Models\{{ ModelName }};
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+
+class {{ ModelName }}Controller extends Controller
+{
+    public function index(): AnonymousResourceCollection
+    {
+        ${{ modelNames }} = {{ ModelName }}::latest()->paginate(15);
+
+        return {{ ModelName }}Resource::collection(${{ modelNames }});
+    }
+
+    public function store(
+        Store{{ ModelName }}Request $request,
+        Store{{ ModelName }}Action $action,
+    ): {{ ModelName }}Resource {
+        ${{ modelName }} = $action->execute(
+            {{ ModelName }}Data::fromRequest($request)
+        );
+
+        return new {{ ModelName }}Resource(${{ modelName }});
+    }
+
+    public function show({{ ModelName }} ${{ modelName }}): {{ ModelName }}Resource
+    {
+        return new {{ ModelName }}Resource(${{ modelName }});
+    }
+
+    public function update(
+        Update{{ ModelName }}Request $request,
+        {{ ModelName }} ${{ modelName }},
+        Update{{ ModelName }}Action $action,
+    ): {{ ModelName }}Resource {
+        ${{ modelName }} = $action->execute(
+            ${{ modelName }},
+            {{ ModelName }}Data::fromRequest($request)
+        );
+
+        return new {{ ModelName }}Resource(${{ modelName }});
+    }
+
+    public function destroy(
+        {{ ModelName }} ${{ modelName }},
+        Delete{{ ModelName }}Action $action,
+    ): JsonResponse {
+        $action->execute(${{ modelName }});
+
+        return response()->json(['message' => '{{ ModelName }} deleted successfully.']);
+    }
+}

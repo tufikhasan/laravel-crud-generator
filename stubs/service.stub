@@ -1,0 +1,37 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ RootNamespace }}\Services\{{ ModelName }};
+
+use {{ RootNamespace }}\DTOs\{{ ModelName }}\{{ ModelName }}Data;
+use {{ RootNamespace }}\Models\{{ ModelName }};
+use Illuminate\Support\Str;
+
+class {{ ModelName }}Service
+{
+    public function create({{ ModelName }}Data $data): {{ ModelName }}
+    {
+        return {{ ModelName }}::create([
+            'name' => $data->name,
+            'slug' => Str::slug($data->name),
+            // TODO: Map additional DTO fields
+        ]);
+    }
+
+    public function update({{ ModelName }} ${{ modelName }}, {{ ModelName }}Data $data): {{ ModelName }}
+    {
+        ${{ modelName }}->update([
+            'name' => $data->name,
+            'slug' => Str::slug($data->name),
+            // TODO: Map additional DTO fields
+        ]);
+
+        return ${{ modelName }}->refresh();
+    }
+
+    public function delete({{ ModelName }} ${{ modelName }}): void
+    {
+        ${{ modelName }}->delete();
+    }
+}

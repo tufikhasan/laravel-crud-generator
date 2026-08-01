@@ -1,0 +1,24 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ RootNamespace }}\Actions\{{ ModelName }};
+
+use {{ RootNamespace }}\Models\{{ ModelName }};
+use {{ RootNamespace }}\Services\{{ ModelName }}\{{ ModelName }}Service;
+use Illuminate\Support\Facades\DB;
+
+class Delete{{ ModelName }}Action
+{
+    public function __construct(
+        private readonly {{ ModelName }}Service $service,
+    ) {
+    }
+
+    public function execute({{ ModelName }} ${{ modelName }}): void
+    {
+        DB::transaction(
+            fn () => $this->service->delete(${{ modelName }})
+        );
+    }
+}
