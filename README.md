@@ -58,37 +58,13 @@ php artisan make:crud Category --api
 
 ## Installation
 
-### Via Composer (Packagist)
+### Composer (Packagist)
 
 ```bash
 composer require tufikhasan/laravel-crud-generator
 ```
 
 The package registers itself automatically via Laravel's package auto-discovery.
-
-### Local Development (Path Repository)
-
-Add to your project's `composer.json`:
-
-```json
-{
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/tufikhasan/laravel-crud-generator.git",
-        }
-    ],
-    "require": {
-        "tufikhasan/laravel-crud-generator": "dev-main"
-    }
-}
-```
-
-Then run:
-
-```bash
-composer update tufikhasan/laravel-crud-generator
-```
 
 ---
 
@@ -413,12 +389,6 @@ class StoreCategoryAction
 ```
 
 ---
-
-## Publishing to Packagist
-
-1. Push `packages/tufikhasan/laravel-crud-generator/` to its own GitHub repository.
-2. Go to [packagist.org](https://packagist.org) → Submit Package → enter your GitHub URL.
-3. Add a webhook for auto-updates (Packagist shows instructions).
 
 Users install with:
 
