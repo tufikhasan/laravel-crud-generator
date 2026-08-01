@@ -71,7 +71,7 @@ class MakeCrudCommand extends BaseCrudCommand
         $this->newLine();
         $this->components->info("CRUD for [{$model}] generated successfully!");
 
-        $webPrefix = (string) $this->crudConfig('routes.web_prefix', 'dashboard');
+        $webPrefix = (string) $this->crudConfig('routes.web_prefix', 'admin');
         $namePrefix = (string) $this->crudConfig('routes.name_prefix', 'admin');
         $kebab = $renderer->get('{{ model-names }}');
 
@@ -128,7 +128,7 @@ class MakeCrudCommand extends BaseCrudCommand
         $namespace = $renderer->getRootNamespace();
 
         // ── Config values ──────────────────────────────────────────────────
-        $webPrefix = (string) $this->crudConfig('routes.web_prefix', 'dashboard');
+        $webPrefix = (string) $this->crudConfig('routes.web_prefix', 'admin');
         $namePrefix = (string) $this->crudConfig('routes.name_prefix', 'admin');
         $apiPrefix = (string) $this->crudConfig('routes.api_prefix', '');
 

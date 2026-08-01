@@ -88,7 +88,7 @@ abstract class BaseCrudCommand extends Command
             packageStubsPath: $this->stubsPath(),
             extraTokens: [
                 '{{ RouteNamePrefix }}' => (string) $this->crudConfig('routes.name_prefix', 'admin'),
-                '{{ RouteWebPrefix }}' => (string) $this->crudConfig('routes.web_prefix', 'dashboard'),
+                '{{ RouteWebPrefix }}' => (string) $this->crudConfig('routes.web_prefix', 'admin'),
             ],
         );
     }

@@ -122,6 +122,7 @@ php artisan make:crud {name} [--api] [--skip-model] [--force]
 | Index View | `resources/views/pages/admin/categories/index.blade.php` |
 | Create View | `resources/views/pages/admin/categories/create.blade.php` |
 | Edit View | `resources/views/pages/admin/categories/edit.blade.php` |
+| Show View | `resources/views/pages/admin/categories/show.blade.php` |
 | Routes | Appended to `routes/web.php` (and `routes/api.php` if `--api`) |
 
 ---
@@ -230,7 +231,7 @@ return [
 
     // Route generation settings
     'routes' => [
-        'web_prefix'  => env('CRUD_ROUTE_WEB_PREFIX', 'dashboard'),
+        'web_prefix'  => env('CRUD_ROUTE_WEB_PREFIX', 'admin'),
         'name_prefix' => env('CRUD_ROUTE_NAME_PREFIX', 'admin'),
         'api_prefix'  => env('CRUD_ROUTE_API_PREFIX', ''),
     ],
@@ -251,7 +252,7 @@ return [
 | `paths.controller_api` | `Http/Controllers/Api` | API controller directory |
 | `paths.resource` | `Http/Resources` | API Resource directory |
 | `view_path` | `pages/admin` | Relative to `resources/views/` |
-| `routes.web_prefix` | `dashboard` | URL prefix for admin routes |
+| `routes.web_prefix` | `admin` | URL prefix for admin routes |
 | `routes.name_prefix` | `admin` | Named route prefix |
 | `routes.api_prefix` | `''` | URL prefix for API routes |
 

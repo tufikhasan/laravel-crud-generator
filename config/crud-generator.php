@@ -64,7 +64,7 @@ return [
     |
     */
     'routes' => [
-        'web_prefix' => env('CRUD_ROUTE_WEB_PREFIX', 'dashboard'),
+        'web_prefix' => env('CRUD_ROUTE_WEB_PREFIX', 'admin'),
         'name_prefix' => env('CRUD_ROUTE_NAME_PREFIX', 'admin'),
         'api_prefix' => env('CRUD_ROUTE_API_PREFIX', ''),
     ],
