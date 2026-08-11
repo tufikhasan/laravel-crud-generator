@@ -1,4 +1,4 @@
-<x-layouts.dashboard title="Create {{ ModelName }}" description="Add a new {{ modelName }} to the system">
+{{ LayoutStart }}
 
 <div class="container-fluid py-4">
     {{-- Page Header --}}
@@ -41,4 +41,4 @@
         @include('pages.{{ RouteNamePrefix }}{{ model-names }}.form')
     </form>
 </div>
-</x-layouts.dashboard>
+{{ LayoutEnd }}

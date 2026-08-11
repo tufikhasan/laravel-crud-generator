@@ -1,4 +1,4 @@
-<x-layouts.dashboard title="Edit {{ ModelName }}" description="Update {{ modelName }} details">
+{{ LayoutStart }}
 <div class="container-fluid py-4">
     {{-- Page Header --}}
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom">
@@ -47,4 +47,4 @@
         @include('pages.{{ RouteNamePrefix }}{{ model-names }}.form')
     </form>
 </div>
-</x-layouts.dashboard>
+{{ LayoutEnd }}

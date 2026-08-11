@@ -1,4 +1,4 @@
-<x-layouts.dashboard title="Edit {{ ModelName }}" description="Update {{ modelName }} details">
+{{ LayoutStart }}
 <div>
     {{-- Page Header --}}
     <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
@@ -48,4 +48,4 @@
         @include('pages.{{ RouteNamePrefix }}{{ model-names }}.form')
     </form>
 </div>
-</x-layouts.dashboard>
+{{ LayoutEnd }}

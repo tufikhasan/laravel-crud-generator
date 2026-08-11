@@ -1,4 +1,4 @@
-<x-layouts.dashboard title="{{ ModelName }} Details" description="View details of {{ modelName }}">
+{{ LayoutStart }}
 <div>
     {{-- Page Header --}}
     <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
@@ -86,4 +86,4 @@
 
     </div>
 </div>
-</x-layouts.dashboard>
+{{ LayoutEnd }}

@@ -61,6 +61,23 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | View Layout Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Define how the generated views should extend your application's layout.
+    | type: 'component' (e.g. <x-layouts.app>) or 'extend' (e.g. @extends('layouts.app'))
+    | name: The name of the component or layout file.
+    | section: If using 'extend', the name of the section to yield content into.
+    |
+    */
+    'layout' => [
+        'type' => 'component',
+        'name' => 'layouts.dashboard',
+        'section' => 'content',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Architectural Pattern
     |--------------------------------------------------------------------------
     |

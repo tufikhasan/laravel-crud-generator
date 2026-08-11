@@ -264,6 +264,13 @@ return [
     // Default View Framework ('tailwind' or 'bootstrap')
     'view' => 'tailwind',
 
+    // View Layout Configuration
+    'layout' => [
+        'type' => 'component',
+        'name' => 'layouts.dashboard',
+        'section' => 'content',
+    ],
+
     // Route generation settings
     'routes' => [
         'web_prefix'  => env('CRUD_ROUTE_WEB_PREFIX', null),
@@ -288,6 +295,9 @@ return [
 | `paths.resource` | `Http/Resources` | API Resource directory |
 | `paths.repository` | `Repositories` | Repository directory |
 | `view` | `tailwind` | Default view framework (`tailwind` or `bootstrap`) |
+| `layout.type` | `component` | Layout style (`component` or `extend`) |
+| `layout.name` | `layouts.dashboard` | Name of the component or layout file |
+| `layout.section` | `content` | Name of the section to yield into (if type=extend) |
 | `view_path` | `pages/admin` | Relative to `resources/views/` |
 | `pattern` | `service` | Architectural pattern (`service`, `hybrid`, or `repository`) |
 | `routes.web_prefix` | `null` | URL prefix for admin routes (nullable, not required) |

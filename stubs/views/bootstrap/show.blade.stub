@@ -1,4 +1,4 @@
-<x-layouts.dashboard title="{{ ModelName }} Details" description="View details of {{ modelName }}">
+{{ LayoutStart }}
 <div class="container-fluid py-4">
     {{-- Page Header --}}
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom">
@@ -77,4 +77,4 @@
 
     </div>
 </div>
-</x-layouts.dashboard>
+{{ LayoutEnd }}

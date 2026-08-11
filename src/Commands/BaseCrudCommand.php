@@ -80,16 +80,38 @@ abstract class BaseCrudCommand extends Command
      * Build a fully configured StubRenderer for the given model name.
      * Injects route-related tokens from config so stubs are config-aware.
      */
-    protected function makeRenderer(string $name): StubRenderer
+    protected function makeRenderer(string $modelName, array $extraTokens = []): StubRenderer
     {
+        $prefixName = $this->crudConfig('routes.name_prefix', null);
+        $prefixNameStr = $prefixName ? $prefixName . '.' : '';
+
+        $prefixWeb = $this->crudConfig('routes.web_prefix', null);
+        $prefixWebStr = $prefixWeb ? $prefixWeb . '/' : '';
+
+        $layoutType = $this->crudConfig('layout.type', 'component');
+        $layoutName = $this->crudConfig('layout.name', 'layouts.dashboard');
+        $layoutSection = $this->crudConfig('layout.section', 'content');
+
+        if ($layoutType === 'extend') {
+            $layoutStart = "@extends('{$layoutName}')\n\n@section('{$layoutSection}')";
+            $layoutEnd = "@endsection";
+        } else {
+            $layoutStart = "<x-{$layoutName}>";
+            $layoutEnd = "</x-{$layoutName}>";
+        }
+
+        $tokens = array_merge([
+            '{{ RouteNamePrefix }}' => $prefixNameStr,
+            '{{ RouteWebPrefix }}' => $prefixWebStr,
+            '{{ LayoutStart }}' => $layoutStart,
+            '{{ LayoutEnd }}' => $layoutEnd,
+        ], $extraTokens);
+
         return new StubRenderer(
-            modelName: $name,
+            modelName: $modelName,
             rootNamespace: $this->rootNamespace(),
             packageStubsPath: $this->stubsPath(),
-            extraTokens: [
-                '{{ RouteNamePrefix }}' => $this->crudConfig('routes.name_prefix') ? rtrim((string) $this->crudConfig('routes.name_prefix'), '.') . '.' : '',
-                '{{ RouteWebPrefix }}' => (string) $this->crudConfig('routes.web_prefix'),
-            ],
+            extraTokens: $tokens,
         );
     }
 

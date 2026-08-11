@@ -1,4 +1,4 @@
-<x-layouts.dashboard title="{{ ModelNames }}" description="Manage and organize all {{ modelNames }}.">
+{{ LayoutStart }}
 <div class="container-fluid py-4">
     {{-- Header Actions --}}
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom">
@@ -114,4 +114,4 @@
         @endif
     </div>
 </div>
-</x-layouts.dashboard>
+{{ LayoutEnd }}

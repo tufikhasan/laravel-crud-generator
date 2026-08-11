@@ -1,4 +1,4 @@
-<x-layouts.dashboard title="{{ ModelNames }}" description="Manage and organize all {{ modelNames }}.">
+{{ LayoutStart }}
 <div>
     {{-- Header Actions --}}
     <div class="flex items-center justify-between mb-6 flex-wrap gap-4">
@@ -131,4 +131,4 @@
         @endif
     </div>
 </div>
-</x-layouts.dashboard>
+{{ LayoutEnd }}
