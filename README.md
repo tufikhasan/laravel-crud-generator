@@ -6,6 +6,18 @@
 
 > Generate **production-ready, enterprise-grade CRUD scaffolding** in seconds — following the **DTO → Action → Service → Controller** architecture.
 
+## Installation
+
+### Composer (Packagist)
+
+```bash
+composer require tufikhasan/laravel-crud-generator
+```
+
+The package registers itself automatically via Laravel's package auto-discovery.
+
+---
+
 One command. Thirteen files. Zero boilerplate.
 
 ```bash
@@ -65,18 +77,6 @@ php artisan make:crud Category --api
 |-------------|----------|
 | PHP         | `^8.2`   |
 | Laravel     | `^11|^12|^13` |
-
----
-
-## Installation
-
-### Composer (Packagist)
-
-```bash
-composer require tufikhasan/laravel-crud-generator
-```
-
-The package registers itself automatically via Laravel's package auto-discovery.
 
 ---
 
