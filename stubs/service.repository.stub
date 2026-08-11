@@ -23,6 +23,11 @@ class {{ ModelName }}Service
         return $this->repository->find($id);
     }
 
+    public function show(int|string $id): ?{{ ModelName }}
+    {
+        return $this->repository->show($id);
+    }
+
     public function create(array $data): {{ ModelName }}
     {
         // Example business logic

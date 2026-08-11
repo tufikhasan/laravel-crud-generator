@@ -14,6 +14,8 @@ interface {{ ModelName }}RepositoryInterface
 
     public function find(int|string $id): ?{{ ModelName }};
 
+    public function show(int|string $id): ?{{ ModelName }};
+
     public function create(array $data): {{ ModelName }};
 
     public function update({{ ModelName }} ${{ modelName }}, array $data): bool;

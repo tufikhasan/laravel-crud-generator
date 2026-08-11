@@ -20,6 +20,11 @@ class {{ ModelName }}Repository implements {{ ModelName }}RepositoryInterface
 
     public function find(int|string $id): ?{{ ModelName }}
     {
+        return {{ ModelName }}::find($id);
+    }
+
+    public function show(int|string $id): ?{{ ModelName }}
+    {
         return {{ ModelName }}::findOrFail($id);
     }
 
