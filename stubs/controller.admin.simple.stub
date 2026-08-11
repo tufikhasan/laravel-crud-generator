@@ -32,7 +32,7 @@ class {{ ModelName }}Controller extends Controller
     {
         $this->service->create($request->validated());
 
-        return redirect()->route('{{ RouteNamePrefix }}.{{ model_names }}.index')
+        return redirect()->route('{{ RouteNamePrefix }}{{ model_names }}.index')
             ->with('success', '{{ ModelName }} created successfully.');
     }
 
@@ -60,7 +60,7 @@ class {{ ModelName }}Controller extends Controller
     {
         $this->service->delete(${{ modelName }});
 
-        return redirect()->route('{{ RouteNamePrefix }}.{{ model_names }}.index')
+        return redirect()->route('{{ RouteNamePrefix }}{{ model_names }}.index')
             ->with('success', '{{ ModelName }} deleted successfully.');
     }
 }

@@ -63,10 +63,10 @@ return [
     | Route Configuration
     |--------------------------------------------------------------------------
     |
-    | web_prefix   : URL prefix for admin routes. e.g. 'dashboard'
+    | web_prefix   : URL prefix for admin routes. e.g. 'dashboard' (nullable)
     |                → Route::resource('dashboard/categories', ...)
     |
-    | name_prefix  : Named route prefix. e.g. 'admin'
+    | name_prefix  : Named route prefix. e.g. 'admin' (nullable)
     |                → route('admin.categories.index')
     |
     | api_prefix   : URL prefix for API routes (leave empty for no prefix).
@@ -74,8 +74,8 @@ return [
     |
     */
     'routes' => [
-        'web_prefix' => env('CRUD_ROUTE_WEB_PREFIX', 'admin'),
-        'name_prefix' => env('CRUD_ROUTE_NAME_PREFIX', 'admin'),
+        'web_prefix' => env('CRUD_ROUTE_WEB_PREFIX', null),
+        'name_prefix' => env('CRUD_ROUTE_NAME_PREFIX', null),
         'api_prefix' => env('CRUD_ROUTE_API_PREFIX', ''),
     ],
 

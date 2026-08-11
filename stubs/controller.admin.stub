@@ -35,7 +35,7 @@ class {{ ModelName }}Controller extends Controller
             {{ ModelName }}Data::fromRequest($request)
         );
 
-        return redirect()->route('{{ RouteNamePrefix }}.{{ model_names }}.index')
+        return redirect()->route('{{ RouteNamePrefix }}{{ model_names }}.index')
             ->with('success', '{{ ModelName }} created successfully.');
     }
 
@@ -69,7 +69,7 @@ class {{ ModelName }}Controller extends Controller
     ): RedirectResponse {
         $action->execute(${{ modelName }});
 
-        return redirect()->route('{{ RouteNamePrefix }}.{{ model_names }}.index')
+        return redirect()->route('{{ RouteNamePrefix }}{{ model_names }}.index')
             ->with('success', '{{ ModelName }} deleted successfully.');
     }
 }

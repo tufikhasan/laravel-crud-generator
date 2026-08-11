@@ -5,7 +5,7 @@
         <div>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-1">
-                    <li class="breadcrumb-item"><a href="{{ route('{{ RouteNamePrefix }}.{{ model_names }}.index') }}" class="text-decoration-none">{{ ModelNames }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('{{ RouteNamePrefix }}{{ model_names }}.index') }}" class="text-decoration-none">{{ ModelNames }}</a></li>
                     <li class="breadcrumb-item active" aria-current="page">{{ ModelName }} Details</li>
                 </ol>
             </nav>
@@ -13,10 +13,10 @@
         </div>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
-                <a href="{{ route('{{ RouteNamePrefix }}.{{ model_names }}.index') }}" class="btn btn-sm btn-outline-secondary">
+                <a href="{{ route('{{ RouteNamePrefix }}{{ model_names }}.index') }}" class="btn btn-sm btn-outline-secondary">
                     Back to List
                 </a>
-                <a href="{{ route('{{ RouteNamePrefix }}.{{ model_names }}.edit', ${{ modelName }}) }}" class="btn btn-sm btn-primary">
+                <a href="{{ route('{{ RouteNamePrefix }}{{ model_names }}.edit', ${{ modelName }}) }}" class="btn btn-sm btn-primary">
                     Edit {{ ModelName }}
                 </a>
             </div>

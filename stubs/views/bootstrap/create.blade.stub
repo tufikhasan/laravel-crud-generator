@@ -6,7 +6,7 @@
         <div>
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-1">
-                    <li class="breadcrumb-item"><a href="{{ route('{{ RouteNamePrefix }}.{{ model_names }}.index') }}" class="text-decoration-none">{{ ModelNames }}</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('{{ RouteNamePrefix }}{{ model_names }}.index') }}" class="text-decoration-none">{{ ModelNames }}</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Add {{ ModelName }}</li>
                 </ol>
             </nav>
@@ -14,7 +14,7 @@
         </div>
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group me-2">
-                <a href="{{ route('{{ RouteNamePrefix }}.{{ model_names }}.index') }}" class="btn btn-sm btn-outline-secondary">
+                <a href="{{ route('{{ RouteNamePrefix }}{{ model_names }}.index') }}" class="btn btn-sm btn-outline-secondary">
                     Cancel
                 </a>
                 <button type="submit" form="create-{{ model_name }}-form" class="btn btn-sm btn-primary">
@@ -36,9 +36,9 @@
     @endif
 
     {{-- Form --}}
-    <form id="create-{{ model_name }}-form" action="{{ route('{{ RouteNamePrefix }}.{{ model_names }}.store') }}" method="POST">
+    <form id="create-{{ model_name }}-form" action="{{ route('{{ RouteNamePrefix }}{{ model_names }}.store') }}" method="POST">
         @csrf
-        @include('pages.{{ RouteNamePrefix }}.{{ model-names }}.form')
+        @include('pages.{{ RouteNamePrefix }}{{ model-names }}.form')
     </form>
 </div>
 </x-layouts.dashboard>

@@ -252,8 +252,8 @@ return [
 
     // Route generation settings
     'routes' => [
-        'web_prefix'  => env('CRUD_ROUTE_WEB_PREFIX', 'admin'),
-        'name_prefix' => env('CRUD_ROUTE_NAME_PREFIX', 'admin'),
+        'web_prefix'  => env('CRUD_ROUTE_WEB_PREFIX', null),
+        'name_prefix' => env('CRUD_ROUTE_NAME_PREFIX', null),
         'api_prefix'  => env('CRUD_ROUTE_API_PREFIX', ''),
     ],
 
@@ -274,8 +274,8 @@ return [
 | `paths.resource` | `Http/Resources` | API Resource directory |
 | `view` | `tailwind` | Default view framework (`tailwind` or `bootstrap`) |
 | `view_path` | `pages/admin` | Relative to `resources/views/` |
-| `routes.web_prefix` | `admin` | URL prefix for admin routes |
-| `routes.name_prefix` | `admin` | Named route prefix |
+| `routes.web_prefix` | `null` | URL prefix for admin routes (nullable, not required) |
+| `routes.name_prefix` | `null` | Named route prefix (nullable, not required) |
 | `routes.api_prefix` | `''` | URL prefix for API routes |
 
 ---

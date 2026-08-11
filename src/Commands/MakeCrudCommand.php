@@ -82,15 +82,17 @@ class MakeCrudCommand extends BaseCrudCommand
         $this->newLine();
         $this->components->info("CRUD for [{$model}] generated successfully!");
 
-        $webPrefix = (string) $this->crudConfig('routes.web_prefix', 'admin');
-        $namePrefix = (string) $this->crudConfig('routes.name_prefix', 'admin');
+        $webPrefix = (string) $this->crudConfig('routes.web_prefix');
+        $namePrefix = (string) $this->crudConfig('routes.name_prefix');
         $kebab = $renderer->get('{{ model-names }}');
 
         if ($withApi) {
             $this->line("  <fg=cyan>API routes:</>  /api/{$kebab}");
         }
-        $this->line("  <fg=cyan>Admin routes:</> /{$webPrefix}/{$kebab}");
-        $this->line("  <fg=cyan>Route names:</>  {$namePrefix}.{$renderer->get('{{ model_names }}')}.{index|create|store|edit|update|destroy}");
+        $adminUrl = $webPrefix ? "/{$webPrefix}/{$kebab}" : "/{$kebab}";
+        $adminName = $namePrefix ? "{$namePrefix}.{$renderer->get('{{ model_names }}')}" : "{$renderer->get('{{ model_names }}')}";
+        $this->line("  <fg=cyan>Admin routes:</> {$adminUrl}");
+        $this->line("  <fg=cyan>Route names:</>  {$adminName}.{index|create|store|edit|update|destroy}");
         $this->newLine();
         $this->line('  <fg=yellow>Next steps:</>');
         $step = 1;
@@ -159,8 +161,8 @@ class MakeCrudCommand extends BaseCrudCommand
         $namespace = $renderer->getRootNamespace();
 
         // ── Config values ──────────────────────────────────────────────────
-        $webPrefix = (string) $this->crudConfig('routes.web_prefix', 'admin');
-        $namePrefix = (string) $this->crudConfig('routes.name_prefix', 'admin');
+        $webPrefix = (string) $this->crudConfig('routes.web_prefix');
+        $namePrefix = (string) $this->crudConfig('routes.name_prefix');
         $apiPrefix = (string) $this->crudConfig('routes.api_prefix', '');
 
         // ── Web (admin) route ──────────────────────────────────────────────
@@ -168,11 +170,16 @@ class MakeCrudCommand extends BaseCrudCommand
         $routeUri = $webPrefix ? "{$webPrefix}/{$modelNames}" : $modelNames;
 
         $webRoute = "\n// {$model} CRUD\n"
-            . "Route::resource('{$routeUri}', {$adminController}::class)\n"
-            . "    ->names('{$namePrefix}.{$modelSnake}');\n";
+            . "Route::resource('{$routeUri}', {$adminController}::class)";
+        if ($namePrefix) {
+            $webRoute .= "\n    ->names('{$namePrefix}.{$modelSnake}');\n";
+        } else {
+            $webRoute .= ";\n";
+        }
 
         $webPath = base_path('routes/web.php');
-        if (file_exists($webPath) && !str_contains((string) file_get_contents($webPath), "{$namePrefix}.{$modelSnake}")) {
+        $nameToCheck = $namePrefix ? "{$namePrefix}.{$modelSnake}" : "{$modelSnake}.index";
+        if (file_exists($webPath) && !str_contains((string) file_get_contents($webPath), $nameToCheck)) {
             file_put_contents($webPath, $webRoute, FILE_APPEND);
         }
 
