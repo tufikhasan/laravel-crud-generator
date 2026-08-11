@@ -4,7 +4,7 @@
 [![PHP](https://img.shields.io/badge/PHP-8.2+-777BB4?style=flat-square&logo=php&logoColor=white)](https://php.net)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
 
-> Generate **production-ready, enterprise-grade CRUD scaffolding** in seconds — following the **DTO → Action → Service → Controller** architecture.
+> Generate **production-ready, enterprise-grade CRUD scaffolding** in seconds — with flexible support for **Hybrid**, **Service**, and **Repository** architectural patterns.
 
 ## Installation
 
