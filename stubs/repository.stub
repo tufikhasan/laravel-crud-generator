@@ -6,7 +6,7 @@ use {{ RootNamespace }}\Models\{{ ModelName }};
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
-class {{ ModelName }}Repository
+class {{ ModelName }}Repository implements {{ ModelName }}RepositoryInterface
 {
     public function paginate(int $perPage = 15): LengthAwarePaginator
     {

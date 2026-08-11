@@ -329,6 +329,8 @@ stubs/crud/
 ├── service.stub
 ├── service.simple.stub
 ├── service.repository.stub
+├── repository.interface.stub
+├── repository.provider.stub
 ├── repository.stub
 ├── request.store.stub
 ├── request.update.stub
@@ -432,15 +434,21 @@ Request (Validation)
 
 ### 3. Repository Pattern (`--pattern=repository`)
 
-A structured approach that separates data access logic from business logic. It introduces a Repository layer without the overhead of DTOs and Actions.
+A structured approach that separates data access logic from business logic. It introduces a Repository layer without the overhead of DTOs and Actions. 
+In true enterprise fashion, this generates both an **Interface** and a **Concrete Implementation**, and automatically wires them up via a `RepositoryServiceProvider`.
 
 ```text
 Request (Validation)
    └── Controller
          └── Service (Business Logic)
-               └── Repository (Data Access)
-                     └── Model (Eloquent)
+               └── RepositoryInterface (Injected)
+                     └── Repository (Data Access)
+                           └── Model (Eloquent)
 ```
+
+> [!NOTE]
+> The first time you use the repository pattern, the generator creates `App\Providers\RepositoryServiceProvider`. 
+> Make sure you register this provider in your `bootstrap/providers.php` or `config/app.php`!
 
 ### Example generated DTO
 

@@ -3,14 +3,14 @@
 namespace {{ RootNamespace }}\Services\{{ ModelName }};
 
 use {{ RootNamespace }}\Models\{{ ModelName }};
-use {{ RootNamespace }}\Repositories\{{ ModelName }}\{{ ModelName }}Repository;
+use {{ RootNamespace }}\Repositories\{{ ModelName }}\{{ ModelName }}RepositoryInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Str;
 
 class {{ ModelName }}Service
 {
     public function __construct(
-        protected {{ ModelName }}Repository $repository
+        protected {{ ModelName }}RepositoryInterface $repository
     ) {}
 
     public function paginate(int $perPage = 15): LengthAwarePaginator
