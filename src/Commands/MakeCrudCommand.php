@@ -11,6 +11,7 @@ class MakeCrudCommand extends BaseCrudCommand
         {--api : Also generate API controller, API resource, and API routes}
         {--S|simple : Generate simple CRUD (Request -> Controller -> Service)}
         {--skip-model : Skip generating the Eloquent model and migration (useful if the model already exists)}
+        {--view= : The view framework (tailwind or bootstrap)}
         {--force : Overwrite existing files}';
 
     protected $description = 'Generate full enterprise CRUD scaffolding (DTO → Actions → Service → Requests → Controller → Views → Routes)';
@@ -22,6 +23,7 @@ class MakeCrudCommand extends BaseCrudCommand
         $isSimple = (bool) $this->option('simple');
         $skipModel = (bool) $this->option('skip-model');
         $force = (bool) $this->option('force');
+        $viewOption = $this->option('view');
 
         $renderer = $this->makeRenderer($name);
         $model = $renderer->getModelName();
@@ -32,6 +34,7 @@ class MakeCrudCommand extends BaseCrudCommand
 
         $opts = ['name' => $name, '--force' => $force];
         $simpleOpts = $isSimple ? ['--simple' => true] : [];
+        $viewOpts = $viewOption ? ['--view' => $viewOption] : [];
 
         if (!$isSimple) {
             // 1. DTO
@@ -63,7 +66,7 @@ class MakeCrudCommand extends BaseCrudCommand
         }
 
         // 7. Blade Views
-        $this->runSub('make:crud-views', $opts, '✓ Blade Views (index, create, edit)');
+        $this->runSub('make:crud-views', $opts + $viewOpts, '✓ Blade Views (index, create, edit)');
 
         // 8. Routes
         $this->appendRoutes($renderer, $withApi);

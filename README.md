@@ -108,7 +108,7 @@ php artisan make:crud Product --force
 ### `make:crud` — Full Scaffolding
 
 ```bash
-php artisan make:crud {name} [--api] [--skip-model] [--force]
+php artisan make:crud {name} [--api] [--skip-model] [--view=tailwind|bootstrap] [--force]
 ```
 
 | Argument/Option | Description |
@@ -117,6 +117,7 @@ php artisan make:crud {name} [--api] [--skip-model] [--force]
 | `--api`         | Also generate API controller, API resource, and API routes |
 | `--S, --simple` | Generate simple CRUD (Request -> Controller -> Service) |
 | `--skip-model`  | Skip model + migration (use when the model already exists) |
+| `--view`        | The view framework (`tailwind` or `bootstrap`) |
 | `--force`       | Overwrite existing files |
 
 **Generated files (with `--api`):**
@@ -209,10 +210,10 @@ Generates: `app/Http/Resources/Category/CategoryResource.php`
 #### `make:crud-views`
 
 ```bash
-php artisan make:crud-views Category
+php artisan make:crud-views Category [--view=tailwind|bootstrap]
 ```
 
-Generates: `resources/views/pages/admin/categories/{index,create,edit,form}.blade.php`
+Generates: `resources/views/pages/admin/categories/{index,create,edit,form}.blade.php` (Using Tailwind or Bootstrap stubs)
 
 ---
 
@@ -245,6 +246,9 @@ return [
 
     // Blade view output path, relative to resource_path('views')
     'view_path' => 'pages/admin',
+    
+    // Default View Framework ('tailwind' or 'bootstrap')
+    'view' => 'tailwind',
 
     // Route generation settings
     'routes' => [
@@ -268,6 +272,7 @@ return [
 | `paths.controller_admin` | `Http/Controllers/Admin` | Admin controller directory |
 | `paths.controller_api` | `Http/Controllers/Api` | API controller directory |
 | `paths.resource` | `Http/Resources` | API Resource directory |
+| `view` | `tailwind` | Default view framework (`tailwind` or `bootstrap`) |
 | `view_path` | `pages/admin` | Relative to `resources/views/` |
 | `routes.web_prefix` | `admin` | URL prefix for admin routes |
 | `routes.name_prefix` | `admin` | Named route prefix |

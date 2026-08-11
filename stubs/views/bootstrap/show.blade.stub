@@ -1,0 +1,80 @@
+<x-layouts.dashboard title="{{ ModelName }} Details" description="View details of {{ modelName }}">
+<div class="container-fluid py-4">
+    {{-- Page Header --}}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom">
+        <div>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-1">
+                    <li class="breadcrumb-item"><a href="{{ route('{{ RouteNamePrefix }}.{{ model_names }}.index') }}" class="text-decoration-none">{{ ModelNames }}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ ModelName }} Details</li>
+                </ol>
+            </nav>
+            <h1 class="h3 m-0">{{ ${{ modelName }}->name ?? 'Details' }}</h1>
+        </div>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group me-2">
+                <a href="{{ route('{{ RouteNamePrefix }}.{{ model_names }}.index') }}" class="btn btn-sm btn-outline-secondary">
+                    Back to List
+                </a>
+                <a href="{{ route('{{ RouteNamePrefix }}.{{ model_names }}.edit', ${{ modelName }}) }}" class="btn btn-sm btn-primary">
+                    Edit {{ ModelName }}
+                </a>
+            </div>
+        </div>
+    </div>
+
+    {{-- Details Layout --}}
+    <div class="row g-4">
+
+        {{-- Core Information --}}
+        <div class="col-12">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">{{ ModelName }} Information</h5>
+                    <small class="text-muted">Core details</small>
+                </div>
+                <div class="card-body">
+                    <dl class="row mb-0">
+                        <dt class="col-sm-3 text-muted">Name</dt>
+                        <dd class="col-sm-9 fw-bold">{{ ${{ modelName }}->name }}</dd>
+
+                        <dt class="col-sm-3 text-muted">Slug</dt>
+                        <dd class="col-sm-9 font-monospace">{{ ${{ modelName }}->slug ?? '—' }}</dd>
+
+                        <dt class="col-sm-3 text-muted">Description</dt>
+                        <dd class="col-sm-9">{{ ${{ modelName }}->description ?? 'No description provided.' }}</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+        {{-- Meta Information --}}
+        <div class="col-12">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">Metadata</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="row mb-0">
+                        <dt class="col-sm-3 text-muted">Status</dt>
+                        <dd class="col-sm-9">
+                            @if(${{ modelName }}->status)
+                                <span class="badge bg-success bg-opacity-10 text-success border border-success">Active</span>
+                            @else
+                                <span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary">Inactive</span>
+                            @endif
+                        </dd>
+
+                        <dt class="col-sm-3 text-muted">Created At</dt>
+                        <dd class="col-sm-9">{{ ${{ modelName }}->created_at->format('M d, Y h:i A') }}</dd>
+
+                        <dt class="col-sm-3 text-muted">Updated At</dt>
+                        <dd class="col-sm-9">{{ ${{ modelName }}->updated_at->format('M d, Y h:i A') }}</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</x-layouts.dashboard>

@@ -47,6 +47,16 @@ return [
     |
     */
     'view_path' => 'pages/admin',
+    /*
+    |--------------------------------------------------------------------------
+    | Default View Framework
+    |--------------------------------------------------------------------------
+    |
+    | The default CSS framework used for generated Blade views.
+    | Supported values: 'tailwind', 'bootstrap'
+    |
+    */
+    'view' => 'tailwind',
 
     /*
     |--------------------------------------------------------------------------

@@ -1,0 +1,93 @@
+<div>
+    {{-- Core Information --}}
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-white">
+            <h5 class="mb-0">{{ ModelName }} Information</h5>
+        </div>
+        <div class="card-body">
+            <div class="mb-3">
+                <label for="name" class="form-label">
+                    Name <span class="text-danger">*</span>
+                </label>
+                <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name"
+                       value="{{ old('name', ${{ modelName }}?->name ?? '') }}"
+                       placeholder="e.g. My {{ ModelName }}"
+                       required>
+                @error('name')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label for="slug" class="form-label">
+                    Slug <span class="text-muted small fw-normal ms-1">(optional)</span>
+                </label>
+                <input type="text" class="form-control @error('slug') is-invalid @enderror" id="slug" name="slug"
+                       value="{{ old('slug', ${{ modelName }}?->slug ?? '') }}"
+                       placeholder="auto-generated from name">
+                @error('slug')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">
+                    Description <span class="text-muted small fw-normal ms-1">(optional)</span>
+                </label>
+                <textarea class="form-control @error('description') is-invalid @enderror" id="description" name="description" rows="4">{{ old('description', ${{ modelName }}?->description ?? '') }}</textarea>
+                @error('description')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+    </div>
+
+    {{-- Settings --}}
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-white">
+            <h5 class="mb-0">Settings</h5>
+        </div>
+        <div class="card-body">
+            <div class="mb-3">
+                <label for="status" class="form-label">Status</label>
+                <select class="form-select @error('status') is-invalid @enderror" id="status" name="status">
+                    <option value="1" @selected(old('status', ${{ modelName }}?->status ?? 1) == 1)>Active</option>
+                    <option value="0" @selected(old('status', ${{ modelName }}?->status ?? 1) == 0)>Inactive</option>
+                </select>
+                @error('status')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+        </div>
+    </div>
+
+    {{-- Image --}}
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-white">
+            <h5 class="mb-0">{{ ModelName }} Image</h5>
+        </div>
+        <div class="card-body">
+            @if(isset(${{ modelName }}) && ${{ modelName }}?->image)
+                <div class="d-flex align-items-center justify-content-between p-3 border rounded bg-light mb-3">
+                    <span class="fw-medium">{{ ${{ modelName }}?->image }}</span>
+                    <label class="text-primary fw-medium" style="cursor: pointer;">
+                        Change
+                        <input type="file" name="image" class="d-none" accept=".png,.jpg,.jpeg,.webp" />
+                    </label>
+                </div>
+            @else
+                <label class="d-block w-100 border border-2 border-dashed rounded p-5 text-center" style="cursor: pointer;">
+                    <div class="d-flex flex-column align-items-center">
+                        <span class="fs-5 text-muted mb-2">Upload Image</span>
+                        <span class="small text-muted">PNG, JPG, WEBP up to 2MB</span>
+                    </div>
+                    <input type="file" name="image" class="d-none" accept=".png,.jpg,.jpeg,.webp" />
+                </label>
+            @endif
+
+            @error('image')
+                <div class="text-danger small mt-2">{{ $message }}</div>
+            @enderror
+        </div>
+    </div>
+</div>

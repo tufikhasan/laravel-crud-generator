@@ -6,6 +6,7 @@ class MakeCrudViewsCommand extends BaseCrudCommand
 {
     protected $signature = 'make:crud-views
         {name : The model name (e.g. Category)}
+        {--view= : The view framework (tailwind or bootstrap)}
         {--force : Overwrite existing files}';
 
     protected $description = 'Generate Blade view files (index, create, edit, show) for the admin panel';
@@ -14,16 +15,17 @@ class MakeCrudViewsCommand extends BaseCrudCommand
     {
         $name = (string) $this->argument('name');
         $force = (bool) $this->option('force');
+        $viewType = $this->option('view') ?: $this->crudConfig('view', 'tailwind');
 
         $renderer = $this->makeRenderer($name);
         $modelNames = $renderer->get('{{ model_names }}'); // e.g. "categories"
 
         $views = [
-            'index' => 'views/index.blade.stub',
-            'create' => 'views/create.blade.stub',
-            'edit' => 'views/edit.blade.stub',
-            'show' => 'views/show.blade.stub',
-            'form' => 'views/form.blade.stub',
+            'index' => "views/{$viewType}/index.blade.stub",
+            'create' => "views/{$viewType}/create.blade.stub",
+            'edit' => "views/{$viewType}/edit.blade.stub",
+            'show' => "views/{$viewType}/show.blade.stub",
+            'form' => "views/{$viewType}/form.blade.stub",
         ];
 
         $created = [];
