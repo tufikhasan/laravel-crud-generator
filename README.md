@@ -213,7 +213,17 @@ Generates: `app/Http/Resources/Category/CategoryResource.php`
 php artisan make:crud-views Category [--view=tailwind|bootstrap]
 ```
 
-Generates: `resources/views/pages/admin/categories/{index,create,edit,form}.blade.php` (Using Tailwind or Bootstrap stubs)
+Generates: `resources/views/pages/admin/categories/{index,create,edit,form,show}.blade.php` (Using Tailwind or Bootstrap stubs)
+
+---
+
+#### `make:crud-repository`
+
+```bash
+php artisan make:crud-repository Category
+```
+
+Generates: `app/Repositories/Category/CategoryRepository.php`
 
 ---
 
@@ -307,17 +317,31 @@ stubs/crud/
 ├── action.update.stub
 ├── action.delete.stub
 ├── service.stub
+├── service.simple.stub
+├── service.repository.stub
+├── repository.stub
 ├── request.store.stub
 ├── request.update.stub
 ├── controller.admin.stub
+├── controller.admin.simple.stub
+├── controller.admin.repository.stub
 ├── controller.api.stub
+├── controller.api.simple.stub
+├── controller.api.repository.stub
 ├── resource.stub
 └── views/
-    ├── index.blade.stub
-    ├── create.blade.stub
-    ├── edit.blade.stub
-    ├── form.blade.stub
-    └── show.blade.stub
+    ├── tailwind/
+    │   ├── index.blade.stub
+    │   ├── create.blade.stub
+    │   ├── edit.blade.stub
+    │   ├── form.blade.stub
+    │   └── show.blade.stub
+    └── bootstrap/
+        ├── index.blade.stub
+        ├── create.blade.stub
+        ├── edit.blade.stub
+        ├── form.blade.stub
+        └── show.blade.stub
 ```
 
 ### 2. Edit a Stub
