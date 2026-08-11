@@ -60,6 +60,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Architectural Pattern
+    |--------------------------------------------------------------------------
+    |
+    | The default architectural pattern to use.
+    | Supported values: 'service', 'hybrid'
+    | - 'service' : Controller -> Service -> Model (Simple)
+    | - 'hybrid'  : Controller -> DTO -> Action -> Service -> Model (Advanced)
+    |
+    */
+    'pattern' => 'service',
+
+    /*
+    |--------------------------------------------------------------------------
     | Route Configuration
     |--------------------------------------------------------------------------
     |

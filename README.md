@@ -51,7 +51,7 @@ php artisan make:crud Category --api
 - ✅ **Publishable stubs** — override any generated file template
 - ✅ **Model + migration by default** — pass `--skip-model` if already exists
 - ✅ Optional `--api` flag — API controller + Resource + routes
-- ✅ Optional `--simple` (`-s`) flag — Bypass DTOs & Actions for simple CRUD
+- ✅ Optional `--pattern` option — Choose between `service` (default) or `hybrid` architectures
 - ✅ `--force` flag to overwrite existing files
 - ✅ **Individual commands** — generate only what you need
 - ✅ Auto-registers via **Laravel package auto-discovery**
@@ -94,8 +94,8 @@ php artisan make:crud Product --api
 # Skip model/migration if the model already exists
 php artisan make:crud Product --skip-model
 
-# Generate simple CRUD (Request -> Controller -> Service -> Model)
-php artisan make:crud Category --simple
+# Generate CRUD using the advanced Hybrid pattern (DTO + Actions)
+php artisan make:crud Category --pattern=hybrid
 
 # Overwrite existing files
 php artisan make:crud Product --force
@@ -115,7 +115,7 @@ php artisan make:crud {name} [--api] [--skip-model] [--view=tailwind|bootstrap] 
 |-----------------|-------------|
 | `name`          | Model name in StudlyCase (`Category`, `ProductVariant`) |
 | `--api`         | Also generate API controller, API resource, and API routes |
-| `--S, --simple` | Generate simple CRUD (Request -> Controller -> Service) |
+| `--pattern`     | Architectural pattern (`service` or `hybrid`, overrides config) |
 | `--skip-model`  | Skip model + migration (use when the model already exists) |
 | `--view`        | The view framework (`tailwind` or `bootstrap`) |
 | `--force`       | Overwrite existing files |
@@ -244,6 +244,9 @@ return [
         'resource'         => 'Http/Resources',
     ],
 
+    // Default Architectural Pattern ('service' or 'hybrid')
+    'pattern' => 'service',
+
     // Blade view output path, relative to resource_path('views')
     'view_path' => 'pages/admin',
     
@@ -274,6 +277,7 @@ return [
 | `paths.resource` | `Http/Resources` | API Resource directory |
 | `view` | `tailwind` | Default view framework (`tailwind` or `bootstrap`) |
 | `view_path` | `pages/admin` | Relative to `resources/views/` |
+| `pattern` | `service` | Architectural pattern (`service` or `hybrid`) |
 | `routes.web_prefix` | `null` | URL prefix for admin routes (nullable, not required) |
 | `routes.name_prefix` | `null` | Named route prefix (nullable, not required) |
 | `routes.api_prefix` | `''` | URL prefix for API routes |
@@ -353,7 +357,7 @@ Every stub supports these replacement tokens:
 
 This package supports two enterprise-grade architectural patterns. A hybrid approach is recommended for most applications.
 
-### 1. Hybrid Architecture (Default)
+### 1. Hybrid Pattern (`--pattern=hybrid`)
 
 The best choice for complex entities (e.g., enterprise multi-vendor eCommerce, SaaS subscriptions, POS, inventory, accounting).
 
@@ -379,7 +383,7 @@ Service  (reusable business logic — create / update / delete)
 Model  (Eloquent)
 ```
 
-### 2. Simple Architecture (`--simple` or `-s`)
+### 2. Service Pattern (Default, or `--pattern=service`)
 
 Excellent for basic entities like `Category`, `Brand`, `Unit`, `Country`, `City`, or `Color`. It skips the DTO and Action layers entirely.
 

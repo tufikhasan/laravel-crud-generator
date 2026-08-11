@@ -7,7 +7,7 @@ class MakeCrudControllerCommand extends BaseCrudCommand
     protected $signature = 'make:crud-controller
         {name : The model name (e.g. Category)}
         {target : Target type: admin or api}
-        {--S|simple : Generate simple controller (bypasses Action and DTO)}
+        {--pattern= : The architectural pattern to use (service or hybrid)}
         {--force : Overwrite existing file}';
 
     protected $description = 'Generate a Controller class (admin|api)';
@@ -18,7 +18,8 @@ class MakeCrudControllerCommand extends BaseCrudCommand
     {
         $name = (string) $this->argument('name');
         $target = strtolower((string) $this->argument('target'));
-        $isSimple = (bool) $this->option('simple');
+        $pattern = $this->option('pattern') ?: $this->crudConfig('pattern', 'service');
+        $isSimple = $pattern === 'service';
         $force = (bool) $this->option('force');
 
         if (!in_array($target, self::VALID_TARGETS, true)) {

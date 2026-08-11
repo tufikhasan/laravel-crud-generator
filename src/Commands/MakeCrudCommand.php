@@ -9,8 +9,8 @@ class MakeCrudCommand extends BaseCrudCommand
     protected $signature = 'make:crud
         {name : The model name in StudlyCase (e.g. Category, ProductVariant)}
         {--api : Also generate API controller, API resource, and API routes}
-        {--S|simple : Generate simple CRUD (Request -> Controller -> Service)}
         {--skip-model : Skip generating the Eloquent model and migration (useful if the model already exists)}
+        {--pattern= : The architectural pattern to use (service or hybrid)}
         {--view= : The view framework (tailwind or bootstrap)}
         {--force : Overwrite existing files}';
 
@@ -20,7 +20,8 @@ class MakeCrudCommand extends BaseCrudCommand
     {
         $name = (string) $this->argument('name');
         $withApi = (bool) $this->option('api');
-        $isSimple = (bool) $this->option('simple');
+        $pattern = $this->option('pattern') ?: $this->crudConfig('pattern', 'service');
+        $isSimple = $pattern === 'service';
         $skipModel = (bool) $this->option('skip-model');
         $force = (bool) $this->option('force');
         $viewOption = $this->option('view');
@@ -33,7 +34,7 @@ class MakeCrudCommand extends BaseCrudCommand
         $this->newLine();
 
         $opts = ['name' => $name, '--force' => $force];
-        $simpleOpts = $isSimple ? ['--simple' => true] : [];
+        $patternOpts = ['--pattern' => $pattern];
         $viewOpts = $viewOption ? ['--view' => $viewOption] : [];
 
         if (!$isSimple) {
@@ -45,24 +46,24 @@ class MakeCrudCommand extends BaseCrudCommand
             $this->runSub('make:action', $opts + ['type' => 'update'], '✓ Update Action');
             $this->runSub('make:action', $opts + ['type' => 'delete'], '✓ Delete Action');
         } else {
-            $this->components->twoColumnDetail('<fg=yellow>~ DTO</>', '(--simple)');
-            $this->components->twoColumnDetail('<fg=yellow>~ Actions</>', '(--simple)');
+            $this->components->twoColumnDetail('<fg=yellow>~ DTO</>', '(--pattern=service)');
+            $this->components->twoColumnDetail('<fg=yellow>~ Actions</>', '(--pattern=service)');
         }
 
         // 3. Service
-        $this->runSub('make:crud-service', $opts + $simpleOpts, '✓ Service');
+        $this->runSub('make:crud-service', $opts + $patternOpts, '✓ Service');
 
         // 4. Form Requests
         $this->runSub('make:crud-request', $opts + ['type' => 'store'], '✓ Store Request');
         $this->runSub('make:crud-request', $opts + ['type' => 'update'], '✓ Update Request');
 
         // 5. Admin Controller
-        $this->runSub('make:crud-controller', $opts + ['target' => 'admin'] + $simpleOpts, '✓ Admin Controller');
+        $this->runSub('make:crud-controller', $opts + ['target' => 'admin'] + $patternOpts, '✓ Admin Controller');
 
         // 6. API (optional)
         if ($withApi) {
             $this->runSub('make:crud-resource', $opts, '✓ API Resource');
-            $this->runSub('make:crud-controller', $opts + ['target' => 'api'] + $simpleOpts, '✓ API Controller');
+            $this->runSub('make:crud-controller', $opts + ['target' => 'api'] + $patternOpts, '✓ API Controller');
         }
 
         // 7. Blade Views
