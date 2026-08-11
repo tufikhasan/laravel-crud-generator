@@ -51,7 +51,7 @@ php artisan make:crud Category --api
 - ✅ **Publishable stubs** — override any generated file template
 - ✅ **Model + migration by default** — pass `--skip-model` if already exists
 - ✅ Optional `--api` flag — API controller + Resource + routes
-- ✅ Optional `--pattern` option — Choose between `service` (default) or `hybrid` architectures
+- ✅ Optional `--pattern` option — Choose between `service` (default), `hybrid`, or `repository` architectures
 - ✅ `--force` flag to overwrite existing files
 - ✅ **Individual commands** — generate only what you need
 - ✅ Auto-registers via **Laravel package auto-discovery**
@@ -115,7 +115,7 @@ php artisan make:crud {name} [--api] [--skip-model] [--view=tailwind|bootstrap] 
 |-----------------|-------------|
 | `name`          | Model name in StudlyCase (`Category`, `ProductVariant`) |
 | `--api`         | Also generate API controller, API resource, and API routes |
-| `--pattern`     | Architectural pattern (`service` or `hybrid`, overrides config) |
+| `--pattern`     | Architectural pattern (`service`, `hybrid`, or `repository`, overrides config) |
 | `--skip-model`  | Skip model + migration (use when the model already exists) |
 | `--view`        | The view framework (`tailwind` or `bootstrap`) |
 | `--force`       | Overwrite existing files |
@@ -242,9 +242,10 @@ return [
         'controller_admin' => 'Http/Controllers/Admin',
         'controller_api'   => 'Http/Controllers/Api',
         'resource'         => 'Http/Resources',
+        'repository'       => 'Repositories',
     ],
 
-    // Default Architectural Pattern ('service' or 'hybrid')
+    // Default Architectural Pattern ('service', 'hybrid', or 'repository')
     'pattern' => 'service',
 
     // Blade view output path, relative to resource_path('views')
@@ -275,9 +276,10 @@ return [
 | `paths.controller_admin` | `Http/Controllers/Admin` | Admin controller directory |
 | `paths.controller_api` | `Http/Controllers/Api` | API controller directory |
 | `paths.resource` | `Http/Resources` | API Resource directory |
+| `paths.repository` | `Repositories` | Repository directory |
 | `view` | `tailwind` | Default view framework (`tailwind` or `bootstrap`) |
 | `view_path` | `pages/admin` | Relative to `resources/views/` |
-| `pattern` | `service` | Architectural pattern (`service` or `hybrid`) |
+| `pattern` | `service` | Architectural pattern (`service`, `hybrid`, or `repository`) |
 | `routes.web_prefix` | `null` | URL prefix for admin routes (nullable, not required) |
 | `routes.name_prefix` | `null` | Named route prefix (nullable, not required) |
 | `routes.api_prefix` | `''` | URL prefix for API routes |
@@ -355,7 +357,7 @@ Every stub supports these replacement tokens:
 
 ## Architecture Overview
 
-This package supports two enterprise-grade architectural patterns. A hybrid approach is recommended for most applications.
+This package supports three enterprise-grade architectural patterns. A hybrid approach is recommended for most complex applications, while the service or repository pattern works great for standard entities.
 
 ### 1. Hybrid Pattern (`--pattern=hybrid`)
 
@@ -388,19 +390,22 @@ Model  (Eloquent)
 Excellent for basic entities like `Category`, `Brand`, `Unit`, `Country`, `City`, or `Color`. It skips the DTO and Action layers entirely.
 
 ```text
-HTTP Request
-     │
-     ▼
-Controller  (HTTP only — validate, authorize, pass data to Service)
-     │
-     ▼
-Form Request (validation + authorization)
-     │
-     ▼
-Service  (reusable business logic — create / update / delete)
-     │
-     ▼
-Model  (Eloquent)
+Request (Validation)
+   └── Controller
+         └── Service (Business Logic + Data Access)
+               └── Model (Eloquent)
+```
+
+### 3. Repository Pattern (`--pattern=repository`)
+
+A structured approach that separates data access logic from business logic. It introduces a Repository layer without the overhead of DTOs and Actions.
+
+```text
+Request (Validation)
+   └── Controller
+         └── Service (Business Logic)
+               └── Repository (Data Access)
+                     └── Model (Eloquent)
 ```
 
 ### Example generated DTO

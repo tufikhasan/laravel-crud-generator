@@ -21,7 +21,7 @@ class MakeCrudCommand extends BaseCrudCommand
         $name = (string) $this->argument('name');
         $withApi = (bool) $this->option('api');
         $pattern = $this->option('pattern') ?: $this->crudConfig('pattern', 'service');
-        $isSimple = $pattern === 'service';
+        $isSimple = in_array($pattern, ['service', 'repository'], true);
         $skipModel = (bool) $this->option('skip-model');
         $force = (bool) $this->option('force');
         $viewOption = $this->option('view');
@@ -46,8 +46,13 @@ class MakeCrudCommand extends BaseCrudCommand
             $this->runSub('make:action', $opts + ['type' => 'update'], '✓ Update Action');
             $this->runSub('make:action', $opts + ['type' => 'delete'], '✓ Delete Action');
         } else {
-            $this->components->twoColumnDetail('<fg=yellow>~ DTO</>', '(--pattern=service)');
-            $this->components->twoColumnDetail('<fg=yellow>~ Actions</>', '(--pattern=service)');
+            $this->components->twoColumnDetail('<fg=yellow>~ DTO</>', "(--pattern={$pattern})");
+            $this->components->twoColumnDetail('<fg=yellow>~ Actions</>', "(--pattern={$pattern})");
+        }
+
+        // 2.5 Repository (if pattern is repository)
+        if ($pattern === 'repository') {
+            $this->runSub('make:crud-repository', $opts, '✓ Repository');
         }
 
         // 3. Service

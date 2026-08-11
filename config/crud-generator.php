@@ -32,6 +32,7 @@ return [
         'controller_admin' => 'Http/Controllers/Admin',
         'controller_api' => 'Http/Controllers/Api',
         'resource' => 'Http/Resources',
+        'repository' => 'Repositories',
     ],
 
     /*
@@ -64,9 +65,10 @@ return [
     |--------------------------------------------------------------------------
     |
     | The default architectural pattern to use.
-    | Supported values: 'service', 'hybrid'
-    | - 'service' : Controller -> Service -> Model (Simple)
-    | - 'hybrid'  : Controller -> DTO -> Action -> Service -> Model (Advanced)
+    | Supported values: 'service', 'hybrid', 'repository'
+    | - 'service'    : Controller -> Service -> Model (Simple)
+    | - 'hybrid'     : Controller -> DTO -> Action -> Service -> Model (Advanced)
+    | - 'repository' : Controller -> Service -> Repository -> Model
     |
     */
     'pattern' => 'service',

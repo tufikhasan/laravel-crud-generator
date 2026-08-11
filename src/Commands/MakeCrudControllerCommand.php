@@ -19,7 +19,7 @@ class MakeCrudControllerCommand extends BaseCrudCommand
         $name = (string) $this->argument('name');
         $target = strtolower((string) $this->argument('target'));
         $pattern = $this->option('pattern') ?: $this->crudConfig('pattern', 'service');
-        $isSimple = $pattern === 'service';
+        $isSimple = in_array($pattern, ['service', 'repository'], true);
         $force = (bool) $this->option('force');
 
         if (!in_array($target, self::VALID_TARGETS, true)) {
@@ -32,7 +32,11 @@ class MakeCrudControllerCommand extends BaseCrudCommand
         $className = "{$model}Controller";
         $configKey = "controller_{$target}";
         
-        $stubName = $isSimple ? "controller.{$target}.simple.stub" : "controller.{$target}.stub";
+        if ($pattern === 'repository') {
+            $stubName = "controller.{$target}.repository.stub";
+        } else {
+            $stubName = $isSimple ? "controller.{$target}.simple.stub" : "controller.{$target}.stub";
+        }
         $content = $renderer->renderStub($stubName);
         $targetPath = $this->resolveAppPath($configKey, "{$className}.php");
         $written = $renderer->write($targetPath, $content, $force);

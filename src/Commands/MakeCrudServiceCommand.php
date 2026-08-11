@@ -22,7 +22,11 @@ class MakeCrudServiceCommand extends BaseCrudCommand
         $model = $renderer->getModelName();
         $className = "{$model}Service";
         
-        $stubName = $isSimple ? 'service.simple.stub' : 'service.stub';
+        if ($pattern === 'repository') {
+            $stubName = 'service.repository.stub';
+        } else {
+            $stubName = $isSimple ? 'service.simple.stub' : 'service.stub';
+        }
         $content = $renderer->renderStub($stubName);
         $targetPath = $this->resolveAppPath('service', $model, "{$className}.php");
         $written = $renderer->write($targetPath, $content, $force);

@@ -1,0 +1,40 @@
+<?php
+
+namespace {{ RootNamespace }}\Repositories\{{ ModelName }};
+
+use {{ RootNamespace }}\Models\{{ ModelName }};
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
+
+class {{ ModelName }}Repository
+{
+    public function paginate(int $perPage = 15): LengthAwarePaginator
+    {
+        return {{ ModelName }}::latest()->paginate($perPage);
+    }
+
+    public function all(): Collection
+    {
+        return {{ ModelName }}::all();
+    }
+
+    public function find(int|string $id): ?{{ ModelName }}
+    {
+        return {{ ModelName }}::findOrFail($id);
+    }
+
+    public function create(array $data): {{ ModelName }}
+    {
+        return {{ ModelName }}::create($data);
+    }
+
+    public function update({{ ModelName }} ${{ modelName }}, array $data): bool
+    {
+        return ${{ modelName }}->update($data);
+    }
+
+    public function delete({{ ModelName }} ${{ modelName }}): ?bool
+    {
+        return ${{ modelName }}->delete();
+    }
+}

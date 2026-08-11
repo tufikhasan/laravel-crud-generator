@@ -10,6 +10,7 @@ use TufikHasan\CrudGenerator\Commands\MakeCrudRequestCommand;
 use TufikHasan\CrudGenerator\Commands\MakeCrudResourceCommand;
 use TufikHasan\CrudGenerator\Commands\MakeCrudServiceCommand;
 use TufikHasan\CrudGenerator\Commands\MakeCrudViewsCommand;
+use TufikHasan\CrudGenerator\Commands\MakeCrudRepositoryCommand;
 use TufikHasan\CrudGenerator\Commands\MakeDtoCommand;
 
 class CrudGeneratorServiceProvider extends ServiceProvider
@@ -35,6 +36,7 @@ class CrudGeneratorServiceProvider extends ServiceProvider
                 MakeCrudControllerCommand::class,
                 MakeCrudResourceCommand::class,
                 MakeCrudViewsCommand::class,
+                MakeCrudRepositoryCommand::class,
             ]);
 
             // php artisan vendor:publish --tag=crud-generator-config
